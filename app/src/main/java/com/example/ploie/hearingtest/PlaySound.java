@@ -15,9 +15,13 @@ public class PlaySound extends Activity {
     private final int sampleRate = 44100;
     private final int numSamples = duration * sampleRate;
     private final double sample[] = new double[numSamples];
-    private final double freqOfTone = 300; // hz
+    private double freqOfTone = 1000; // hz
 
     private final byte generatedSnd[] = new byte[2 * numSamples];
+
+    public void setFrequency(double newFreq) {
+        freqOfTone = newFreq;
+    }
 
     Handler handler = new Handler();
 
