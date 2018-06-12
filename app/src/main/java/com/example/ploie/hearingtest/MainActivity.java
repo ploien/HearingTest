@@ -15,5 +15,12 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
     }
 
+    public void playSound() {
+        PlaySound sound = new PlaySound();
+        sound.playSound();
+        sound.setFrequency(500);
+        sound.playSound();
+    }
+
 
 }
