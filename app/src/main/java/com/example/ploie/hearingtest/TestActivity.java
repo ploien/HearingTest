@@ -25,8 +25,14 @@ public class TestActivity extends AppCompatActivity {
     }
 
 
+    // TODO:
+    // 1. Get button input to work for yes/no
+    // 2. Store results (String? ArrayList?)
+    // 3. While loop for decibel testing
+
     public String test() {
         double frequencies[] = {1000, 2000, 4000, 8000, 1000, 500, 250, 125};
+
         PlaySound sound = new PlaySound();
 
         for(int i = 0; i < frequencies.length; i++){
