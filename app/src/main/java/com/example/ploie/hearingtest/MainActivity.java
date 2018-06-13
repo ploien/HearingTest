@@ -22,16 +22,5 @@ public class MainActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
-    public void testSound(View view)  {
-        PlaySound sound = new PlaySound();
-        sound.playSound();
-        try {
-            Thread.sleep(2500);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-        sound.setFrequency(500);
-        sound.playSound();
-    }
 
 }
