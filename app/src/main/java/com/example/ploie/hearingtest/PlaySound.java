@@ -11,7 +11,7 @@ public class PlaySound extends Activity {
 
     // originally from http://marblemice.blogspot.com/2010/04/generate-and-play-tone-in-android.html
     // and modified by Steve Pomeroy <steve@staticfree.info>
-    private final int duration = 3; // seconds
+    private final int duration = 2; // seconds
     private final int sampleRate = 44100;
     private final int numSamples = duration * sampleRate;
     private final double sample[] = new double[numSamples];
@@ -61,7 +61,7 @@ public class PlaySound extends Activity {
         int idx = 0;
         for (final double dVal : sample) {
             // scale to maximum amplitude
-            final short val = (short) ((dVal * 32767));
+            final short val = (short) ((dVal * 8192));
             // in 16 bit wav PCM, first byte is the low order byte
             generatedSnd[idx++] = (byte) (val & 0x00ff);
             generatedSnd[idx++] = (byte) ((val & 0xff00) >>> 8);
@@ -70,6 +70,7 @@ public class PlaySound extends Activity {
     }
 
     void playSound(){
+        this.genTone();
         final AudioTrack audioTrack = new AudioTrack(AudioManager.STREAM_MUSIC,
                 sampleRate, AudioFormat.CHANNEL_OUT_MONO,
                 AudioFormat.ENCODING_PCM_16BIT, generatedSnd.length,
