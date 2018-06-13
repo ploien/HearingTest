@@ -1,5 +1,6 @@
 package com.example.ploie.hearingtest;
 
+import android.content.Intent;
 import android.media.AudioFormat;
 import android.media.AudioManager;
 import android.media.AudioTrack;
@@ -16,6 +17,11 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
     }
 
+    public void newTest(View view) {
+        Intent intent = new Intent(this, TestActivity.class);
+        startActivity(intent);
+    }
+
     public void testSound(View view)  {
         PlaySound sound = new PlaySound();
         sound.playSound();
@@ -27,6 +33,5 @@ public class MainActivity extends AppCompatActivity {
         sound.setFrequency(500);
         sound.playSound();
     }
-
 
 }
