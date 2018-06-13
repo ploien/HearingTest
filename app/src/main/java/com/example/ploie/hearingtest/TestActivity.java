@@ -2,6 +2,8 @@ package com.example.ploie.hearingtest;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.View;
+
 import java.util.*;
 
 public class TestActivity extends AppCompatActivity {
@@ -24,6 +26,11 @@ public class TestActivity extends AppCompatActivity {
 
     }
 
+    public boolean onYesClick(View view) {
+        return true;
+    }
+
+
 
     // TODO:
     // 1. Get button input to work for yes/no
@@ -35,9 +42,9 @@ public class TestActivity extends AppCompatActivity {
 
         PlaySound sound = new PlaySound();
 
-        for(int i = 0; i < frequencies.length; i++){
+        for (double frequency : frequencies) {
 
-            sound.setFrequency(frequencies[i]);
+            sound.setFrequency(frequency);
             sound.playSound();
 
         }
