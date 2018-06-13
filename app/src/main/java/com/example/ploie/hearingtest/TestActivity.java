@@ -9,18 +9,22 @@ public class TestActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_test);
-        this.Screen();
+
+        String results = this.Screen();
+        saveResults(results);
+        displayResults(results);
     }
 
-    public void Screen() {
-        PlaySound sound = new PlaySound();
-        sound.playSound();
-        try {
-            Thread.sleep(2500);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-        sound.setFrequency(500);
-        sound.playSound();
+    public void saveResults(String results){
+
+    }
+    
+    public void displayResults(String results) {
+
+    }
+
+    public String Screen() {
+        String strongTestResults = test();
+        String weakTestResults = test();
     }
 }
