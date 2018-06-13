@@ -1,5 +1,6 @@
 package com.example.ploie.hearingtest;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -13,11 +14,15 @@ public class TestActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_test);
 
+        Intent intent = getIntent();
+
+    }
+
+    public void onStartClick(View view) {
         String results = this.screen();
         saveResults(results);
         displayResults(results);
     }
-
     public void saveResults(String results){
 
     }
@@ -46,16 +51,21 @@ public class TestActivity extends AppCompatActivity {
 
             sound.setFrequency(frequency);
             sound.playSound();
+            try {
+                Thread.sleep(3000);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
 
         }
 
-        return null;
+        return "done";
     }
 
     public String screen() {
         String strongTestResults = test();
         String weakTestResults = test();
 
-        return null;
+        return "Screening Succesful";
     }
 }
