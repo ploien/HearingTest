@@ -57,29 +57,86 @@ public class TestActivity extends AppCompatActivity {
     }
 
 
-    // TODO:
-    // 1. Get button input to work for yes/no
-    // 2. Store results (String? ArrayList?)
-    // 3. While loop for decibel testing
+//     Below is an alpha example of how the test should run. Here are the steps for the code:
+//
+//     1. A boolean value is created to act as a gate, preventing testing on a specific frequency
+//        from ending before testing conditions are met. A mock boolean conditionsMet currently
+//        allows the while loop to always complete.
+//
+//     2. A for loop, simulating 16 tone tests is created.
+//
+//     3. The boolean, testingFrequency, is flagged as true in the beginning of each iteration of
+//        the for loop. This ensures that each tone is tested.
+//
+//     4. A sleep command is used to simulate the playing of the tone.
+//
+//     5. The booleans 'waiting' and 'buttonClicked' are set in order to allow the user's input
+//        to the yes / no buttons. The selection of either button allows the test to continue.
+//        the test currently uses an infinite while loop to simulate waiting for user input.
+//
+//     6. If the user clicked yes or no, reactions in the test would take place. For now, it simply
+//        changes the booleans declared at the beginning of TestActivity.
+//
+//     7. Since the conditions are always "Met", the testingFrequency boolean is switched to false,
+//        indicating the completion of the current frequency.
 
     public String test() {
-        double frequencies[] = {1000, 2000, 4000, 8000, 1000, 500, 250, 125};
 
-        PlaySound sound = new PlaySound();
+        boolean testingFrequency;
+        boolean conditionsMet = true; // placeholder for conditions for frequency met (3/5 tones heard at appropriate level)
 
-        for (double frequency : frequencies) {
+        for (int i = 0; i < 16; ++i ) {
 
-            sound.setFrequency(frequency);
-            sound.playSound();
-            try {
-                Thread.sleep(3000);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
+            testingFrequency = true;
+            while (testingFrequency == true) {
+                // Play the sound here, simulated by Thread sleeping
+                try {
+                    Thread.sleep(2500);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+                waiting = true;
+                buttonClicked = false;
+
+                while (buttonClicked == false); // Current placeholder for test is waiting
+
+                if (yesClicked == true) {
+                    // do yes conditions (lower volume or tally result)
+                    waiting = false;
+                    yesClicked = false;
+                }
+                else if (noClicked == true) {
+                    // increase volume, reset tally results
+                    waiting = false;
+                    noClicked = false;
+                }
+
+                if (conditionsMet) {
+                    testingFrequency = false;
+                }
             }
-
         }
 
         return "done";
+
+//        Below is starter code for the actual test. Above is the demo test.
+//        double frequencies[] = {1000, 2000, 4000, 8000, 1000, 500, 250, 125};
+//
+//        PlaySound sound = new PlaySound();
+//
+//        for (double frequency : frequencies) {
+//
+//            sound.setFrequency(frequency);
+//            sound.playSound();
+//            try {
+//                Thread.sleep(3000);
+//            } catch (InterruptedException e) {
+//                e.printStackTrace();
+//            }
+//
+//        }
+//
+//        return "done";
     }
 
     public String screen() {
