@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
 
 import java.util.*;
 
@@ -18,10 +19,24 @@ public class TestActivity extends AppCompatActivity {
 
     }
 
+    View.OnClickListener yesHandler = new View.OnClickListener() {
+        public void onClick(View v) {
+            // it was the 1st button
+        }
+    };
+    View.OnClickListener noHandler = new View.OnClickListener() {
+        public void onClick(View v) {
+            // it was the 2nd button
+        }
+    };
     public void onStartClick(View view) {
+        /*
         String results = this.screen();
         saveResults(results);
         displayResults(results);
+        */
+
+        threadTester(view);
     }
     public void saveResults(String results){
 
@@ -30,11 +45,6 @@ public class TestActivity extends AppCompatActivity {
     public void displayResults(String results) {
 
     }
-
-    public boolean onYesClick(View view) {
-        return true;
-    }
-
 
 
     // TODO:
@@ -67,5 +77,30 @@ public class TestActivity extends AppCompatActivity {
         String weakTestResults = test();
 
         return "Screening Succesful";
+    }
+    public String buttonOnClick(View v) {
+        String button = "";
+        switch (v.getId()) {
+            case R.id.yesButton:
+                button = "yes ";
+                break;
+            case R.id.noButton:
+                button = "no ";
+                break;
+        }
+
+        return button;
+    }
+    public String threadTester(View v) {
+
+        String string = "";
+
+        for(int i = 0; i < 10; i++) {
+            string += buttonOnClick(v);
+        }
+
+        System.out.println(string);
+        return string;
+
     }
 }
