@@ -10,6 +10,11 @@ import java.util.*;
 
 public class TestActivity extends AppCompatActivity {
 
+    private boolean waiting = false;
+    private boolean buttonClicked = false;
+    private boolean yesClicked = false;
+    private boolean noClicked = false;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -19,16 +24,21 @@ public class TestActivity extends AppCompatActivity {
 
     }
 
-    View.OnClickListener yesHandler = new View.OnClickListener() {
-        public void onClick(View v) {
-            // it was the 1st button
+    public void onYesClick(View view) {
+        if (waiting == true && buttonClicked == false) {
+            yesClicked = true;
+            buttonClicked = true;
         }
-    };
-    View.OnClickListener noHandler = new View.OnClickListener() {
-        public void onClick(View v) {
-            // it was the 2nd button
+    }
+
+    public void onNoClick(View view) {
+        if (waiting == true && buttonClicked == false) {
+            noClicked = true;
+            buttonClicked = true;
         }
-    };
+    }
+
+
     public void onStartClick(View view) {
         /*
         String results = this.screen();
