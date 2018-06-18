@@ -3,4 +3,5 @@
     <string name="New_Test">New Test</string>
     <string name="button_no">No</string>
     <string name="yesButton">YES</string>
+    <string name="startClick">Start</string>
 </resources>

@@ -1,6 +1,8 @@
 package com.example.ploie.hearingtest;
 
 import android.content.Intent;
+import android.os.Handler;
+import android.os.Looper;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -10,6 +12,7 @@ import java.util.*;
 
 public class TestActivity extends AppCompatActivity {
 
+    private boolean testing = false;
     private boolean waiting = false;
     private boolean buttonClicked = false;
     private boolean yesClicked = false;
@@ -23,6 +26,7 @@ public class TestActivity extends AppCompatActivity {
         Intent intent = getIntent();
 
     }
+
 
     public void onYesClick(View view) {
         if (waiting == true && buttonClicked == false) {
@@ -40,13 +44,22 @@ public class TestActivity extends AppCompatActivity {
 
 
     public void onStartClick(View view) {
-        /*
-        String results = this.screen();
-        saveResults(results);
-        displayResults(results);
-        */
 
-        threadTester(view);
+
+        if(testing == false) {
+            testing = true;
+            final Thread thread = new Thread(new Runnable() {
+                public Handler mHandler;
+
+                public void run() {
+                    Looper.prepare();
+                    test();
+                }
+            });
+            thread.start();
+        }
+
+
     }
     public void saveResults(String results){
 
@@ -85,16 +98,14 @@ public class TestActivity extends AppCompatActivity {
         boolean testingFrequency;
         boolean conditionsMet = true; // placeholder for conditions for frequency met (3/5 tones heard at appropriate level)
 
+        PlaySound play = new PlaySound();
+
         for (int i = 0; i < 16; ++i ) {
 
             testingFrequency = true;
             while (testingFrequency == true) {
                 // Play the sound here, simulated by Thread sleeping
-                try {
-                    Thread.sleep(2500);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
+               play.playSound();
                 waiting = true;
                 buttonClicked = false;
 
