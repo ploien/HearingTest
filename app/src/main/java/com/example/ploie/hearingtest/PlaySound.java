@@ -16,11 +16,22 @@ public class PlaySound extends Activity {
     private final int numSamples = duration * sampleRate;
     private final double sample[] = new double[numSamples];
     private double freqOfTone = 1000; // hz
+    private double volume = 9830.4;
+    private double increase = 1638.4;
+    private double decrease = 3276.8;
 
     private final byte generatedSnd[] = new byte[2 * numSamples];
 
     public void setFrequency(double newFreq) {
         freqOfTone = newFreq;
+    }
+
+    public void increaseVolume() {
+        volume += increase;
+    }
+
+    public void decreasVolume() {
+        volume -= decrease;
     }
 
     Handler handler = new Handler();
@@ -30,6 +41,7 @@ public class PlaySound extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
     }
+
 
     @Override
     protected void onResume() {
@@ -61,7 +73,7 @@ public class PlaySound extends Activity {
         int idx = 0;
         for (final double dVal : sample) {
             // scale to maximum amplitude
-            final short val = (short) ((dVal * 8192));
+            final short val = (short) ((dVal * volume));
             // in 16 bit wav PCM, first byte is the low order byte
             generatedSnd[idx++] = (byte) (val & 0x00ff);
             generatedSnd[idx++] = (byte) ((val & 0xff00) >>> 8);

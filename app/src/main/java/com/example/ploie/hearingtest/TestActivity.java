@@ -20,9 +20,9 @@ public class TestActivity extends AppCompatActivity {
     private boolean yesClicked = false;
     private boolean noClicked = false;
 
-    Button yesButton = (Button) findViewById(R.id.yesButton);
-    Button noButton = (Button) findViewById(R.id.noButton);
-    Button startButton = (Button) findViewById(R.id.button3);
+    //Button yesButton = (Button) findViewById(R.id.yesButton);
+    //Button noButton = (Button) findViewById(R.id.noButton);
+    //Button startButton = (Button) findViewById(R.id.button3);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -68,7 +68,7 @@ public class TestActivity extends AppCompatActivity {
 
     public void onStartClick(View view) {
 
-        startButton.setEnabled(false);
+        //startButton.setEnabled(false);
         final Thread thread = new Thread(new Runnable() {
             public Handler mHandler;
 
@@ -116,24 +116,36 @@ public class TestActivity extends AppCompatActivity {
     public String test() {
 
         boolean testingFrequency;
-        boolean conditionsMet = true; // placeholder for conditions for frequency met (3/5 tones heard at appropriate level)
+        boolean conditionsMet = false; // placeholder for conditions for frequency met (3/5 tones heard at appropriate level)
 
-        PlaySound play = new PlaySound();
-        yesButton.setEnabled(false);
-        noButton.setEnabled(false);
+        PlaySound play;
+        //yesButton.setEnabled(false);
+        //noButton.setEnabled(false);
 
-        for (int i = 0; i < 16; ++i ) {
+        double frequencies[] = {1000, 2000, 4000, 8000, 1000, 500, 250, 125};
+
+        for (int i = 0; i < frequencies.length; ++i ) {
+
+
 
             testingFrequency = true;
             while (testingFrequency == true) {
+                play = new PlaySound();
+                play.setFrequency(frequencies[i]);
                 // Play the sound here, simulated by Thread sleeping
-               play.playSound();
-               yesButton.setEnabled(true);
-               noButton.setEnabled(true);
-               this.waitForThread(); // Current placeholder for test is waiting
+                play.playSound();
+               //yesButton.setEnabled(true);
+               //noButton.setEnabled(true);
+                try {
+                    Thread.sleep(2000);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+                this.waitForThread(); // Current placeholder for test is waiting
 
                 if (yesClicked == true) {
                     // do yes conditions (lower volume or tally result)
+                    conditionsMet = true;
                     yesClicked = false;
                 }
                 else if (noClicked == true) {
@@ -141,9 +153,12 @@ public class TestActivity extends AppCompatActivity {
                     noClicked = false;
                 }
 
+
                 if (conditionsMet) {
                     testingFrequency = false;
+
                 }
+                play = null;
             }
         }
 
