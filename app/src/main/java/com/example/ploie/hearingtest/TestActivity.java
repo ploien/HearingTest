@@ -32,25 +32,24 @@ public class TestActivity extends AppCompatActivity {
 
     }
 
-
-    public void onYesClick(View view) {
-
+    public static void unlockWaiter() {
         synchronized (monitor) {
             monitorState = false;
             monitor.notifyAll();
-            yesClicked = true;
         }
+    }
 
+
+    public void onYesClick(View view) {
+
+        yesClicked = true;
+        unlockWaiter();
     }
 
     public void onNoClick(View view) {
 
-        synchronized (monitor) {
-            monitorState = false;
-            monitor.notifyAll();
-            noClicked = true;
-        }
-
+        noClicked = true;
+        unlockWaiter();
     }
 
     public static void waitForThread() {
