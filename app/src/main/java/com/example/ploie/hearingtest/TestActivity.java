@@ -13,10 +13,12 @@ import java.util.*;
 public class TestActivity extends AppCompatActivity {
 
     private boolean testing = false;
-    private boolean waiting = false;
-    private boolean buttonClicked = false;
     private boolean yesClicked = false;
     private boolean noClicked = false;
+
+    Button yesButton = (Button) findViewById(R.id.yesButton);
+    Button noButton = (Button) findViewById(R.id.noButton);
+    Button startButton = (Button) findViewById(R.id.button3);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,39 +30,21 @@ public class TestActivity extends AppCompatActivity {
     }
 
 
-    public void onYesClick(View view) {
-        if (waiting == true && buttonClicked == false) {
-            yesClicked = true;
-            buttonClicked = true;
-        }
-    }
-
-    public void onNoClick(View view) {
-        if (waiting == true && buttonClicked == false) {
-            noClicked = true;
-            buttonClicked = true;
-        }
-    }
-
-
     public void onStartClick(View view) {
 
+        startButton.setEnabled(false);
+        final Thread thread = new Thread(new Runnable() {
+            public Handler mHandler;
 
-        if(testing == false) {
-            testing = true;
-            final Thread thread = new Thread(new Runnable() {
-                public Handler mHandler;
-
-                public void run() {
-                    Looper.prepare();
-                    test();
-                }
-            });
-            thread.start();
-        }
-
-
+            public void run() {
+                Looper.prepare();
+                test();
+            }
+        });
+        thread.start();
     }
+
+
     public void saveResults(String results){
 
     }
@@ -93,42 +77,8 @@ public class TestActivity extends AppCompatActivity {
 //     7. Since the conditions are always "Met", the testingFrequency boolean is switched to false,
 //        indicating the completion of the current frequency.
 
-    public String test() {
 
-        boolean testingFrequency;
-        boolean conditionsMet = true; // placeholder for conditions for frequency met (3/5 tones heard at appropriate level)
 
-        PlaySound play = new PlaySound();
-
-        for (int i = 0; i < 16; ++i ) {
-
-            testingFrequency = true;
-            while (testingFrequency == true) {
-                // Play the sound here, simulated by Thread sleeping
-               play.playSound();
-                waiting = true;
-                buttonClicked = false;
-
-                while (buttonClicked == false); // Current placeholder for test is waiting
-
-                if (yesClicked == true) {
-                    // do yes conditions (lower volume or tally result)
-                    waiting = false;
-                    yesClicked = false;
-                }
-                else if (noClicked == true) {
-                    // increase volume, reset tally results
-                    waiting = false;
-                    noClicked = false;
-                }
-
-                if (conditionsMet) {
-                    testingFrequency = false;
-                }
-            }
-        }
-
-        return "done";
 
 //        Below is starter code for the actual test. Above is the demo test.
 //        double frequencies[] = {1000, 2000, 4000, 8000, 1000, 500, 250, 125};
@@ -156,6 +106,8 @@ public class TestActivity extends AppCompatActivity {
 
         return "Screening Succesful";
     }
+
+
     public String buttonOnClick(View v) {
         String button = "";
         switch (v.getId()) {
