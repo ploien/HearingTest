@@ -12,6 +12,10 @@ import java.util.*;
 
 public class TestActivity extends AppCompatActivity {
 
+    public static final Object monitor = new Object();
+    public static boolean monitorState = false;
+
+
     private boolean testing = false;
     private boolean yesClicked = false;
     private boolean noClicked = false;
@@ -24,8 +28,41 @@ public class TestActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_test);
-
         Intent intent = getIntent();
+
+    }
+
+
+    public void onYesClick(View view) {
+
+        synchronized (monitor) {
+            monitorState = false;
+            monitor.notifyAll();
+            yesClicked = true;
+        }
+
+    }
+
+    public void onNoClick(View view) {
+
+        synchronized (monitor) {
+            monitorState = false;
+            monitor.notifyAll();
+            noClicked = true;
+        }
+
+    }
+
+    public static void waitForThread() {
+
+        monitorState = true;
+        while (monitorState) {
+            synchronized (monitor) {
+                try {
+                    monitor.wait();
+                } catch (Exception e) {}
+            }
+        }
 
     }
 
@@ -77,8 +114,41 @@ public class TestActivity extends AppCompatActivity {
 //     7. Since the conditions are always "Met", the testingFrequency boolean is switched to false,
 //        indicating the completion of the current frequency.
 
+    public String test() {
 
+        boolean testingFrequency;
+        boolean conditionsMet = true; // placeholder for conditions for frequency met (3/5 tones heard at appropriate level)
 
+        PlaySound play = new PlaySound();
+        yesButton.setEnabled(false);
+        noButton.setEnabled(false);
+
+        for (int i = 0; i < 16; ++i ) {
+
+            testingFrequency = true;
+            while (testingFrequency == true) {
+                // Play the sound here, simulated by Thread sleeping
+               play.playSound();
+               yesButton.setEnabled(true);
+               noButton.setEnabled(true);
+               this.waitForThread(); // Current placeholder for test is waiting
+
+                if (yesClicked == true) {
+                    // do yes conditions (lower volume or tally result)
+                    yesClicked = false;
+                }
+                else if (noClicked == true) {
+                    // increase volume, reset tally results
+                    noClicked = false;
+                }
+
+                if (conditionsMet) {
+                    testingFrequency = false;
+                }
+            }
+        }
+
+        return "done";
 
 //        Below is starter code for the actual test. Above is the demo test.
 //        double frequencies[] = {1000, 2000, 4000, 8000, 1000, 500, 250, 125};
