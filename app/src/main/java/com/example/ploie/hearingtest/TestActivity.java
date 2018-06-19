@@ -127,12 +127,14 @@ public class TestActivity extends AppCompatActivity {
         for (int i = 0; i < frequencies.length; ++i ) {
 
 
-
+            play = new PlaySound();
             testingFrequency = true;
+
             while (testingFrequency == true) {
-                play = new PlaySound();
+                conditionsMet = false;
                 play.setFrequency(frequencies[i]);
                 // Play the sound here, simulated by Thread sleeping
+                play.genTone();
                 play.playSound();
                //yesButton.setEnabled(true);
                //noButton.setEnabled(true);
@@ -145,12 +147,13 @@ public class TestActivity extends AppCompatActivity {
 
                 if (yesClicked == true) {
                     // do yes conditions (lower volume or tally result)
-                    conditionsMet = true;
                     yesClicked = false;
+                    play.decreaseVolume();
                 }
                 else if (noClicked == true) {
                     // increase volume, reset tally results
                     noClicked = false;
+                    play.increaseVolume();
                 }
 
 
@@ -158,8 +161,10 @@ public class TestActivity extends AppCompatActivity {
                     testingFrequency = false;
 
                 }
-                play = null;
+
             }
+
+            play = null;
         }
 
         return "done";

@@ -20,6 +20,7 @@ public class PlaySound extends Activity {
     private double increase = 1638.4;
     private double decrease = 3276.8;
 
+
     private final byte generatedSnd[] = new byte[2 * numSamples];
 
     public void setFrequency(double newFreq) {
@@ -30,8 +31,11 @@ public class PlaySound extends Activity {
         volume += increase;
     }
 
-    public void decreasVolume() {
-        volume -= decrease;
+    public void decreaseVolume() {
+
+        if(volume > 1638.4) {
+            volume -= decrease;
+        }
     }
 
     Handler handler = new Handler();
@@ -48,18 +52,20 @@ public class PlaySound extends Activity {
         super.onResume();
 
         // Use a new tread as this can take a while
-        final Thread thread = new Thread(new Runnable() {
-            public void run() {
-                genTone();
-                handler.post(new Runnable() {
-
-                    public void run() {
-                        playSound();
-                    }
-                });
-            }
-        });
-        thread.start();
+        genTone();
+        playSound();
+//        final Thread thread = new Thread(new Runnable() {
+//            public void run() {
+//                genTone();
+//                handler.post(new Runnable() {
+//
+//                    public void run() {
+//                        playSound();
+//                    }
+//                });
+//            }
+//        });
+//        thread.start();
     }
 
     void genTone(){
@@ -82,7 +88,6 @@ public class PlaySound extends Activity {
     }
 
     void playSound(){
-        this.genTone();
         final AudioTrack audioTrack = new AudioTrack(AudioManager.STREAM_MUSIC,
                 sampleRate, AudioFormat.CHANNEL_OUT_MONO,
                 AudioFormat.ENCODING_PCM_16BIT, generatedSnd.length,
