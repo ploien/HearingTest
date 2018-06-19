@@ -176,31 +176,4 @@ public class TestActivity extends AppCompatActivity {
 
         return "Screening Succesful";
     }
-
-
-    public String buttonOnClick(View v) {
-        String button = "";
-        switch (v.getId()) {
-            case R.id.yesButton:
-                button = "yes ";
-                break;
-            case R.id.noButton:
-                button = "no ";
-                break;
-        }
-
-        return button;
-    }
-    public String threadTester(View v) {
-
-        String string = "";
-
-        for(int i = 0; i < 10; i++) {
-            string += buttonOnClick(v);
-        }
-
-        System.out.println(string);
-        return string;
-
-    }
 }
