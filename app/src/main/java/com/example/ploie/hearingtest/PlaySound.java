@@ -16,9 +16,9 @@ public class PlaySound extends Activity {
     private final int numSamples = duration * sampleRate;
     private final double sample[] = new double[numSamples];
     private double freqOfTone = 1000; // hz
-    private double volume = 9830.4;
-    private double increase = 1638.4;
-    private double decrease = 3276.8;
+    public static double volume;
+    private double increase = 1638.4; //1638.4
+    private double decrease = 3276.8; //3276.8 is what we actually want
 
 
     private final byte generatedSnd[] = new byte[2 * numSamples];
@@ -27,14 +27,25 @@ public class PlaySound extends Activity {
         freqOfTone = newFreq;
     }
 
+    public void initializeVolume() {volume = 12288;}
+
     public void increaseVolume() {
-        volume += increase;
+
+        if (volume + increase < 32768) {
+            volume += increase;
+        }
+        else {
+            volume = 32768;
+        }
     }
 
     public void decreaseVolume() {
 
-        if(volume > 1638.4) {
+        if (volume - decrease > 1) {
             volume -= decrease;
+        }
+        else {
+            volume = 250;
         }
     }
 
@@ -88,12 +99,19 @@ public class PlaySound extends Activity {
     }
 
     void playSound(){
+        genTone();
         final AudioTrack audioTrack = new AudioTrack(AudioManager.STREAM_MUSIC,
                 sampleRate, AudioFormat.CHANNEL_OUT_MONO,
                 AudioFormat.ENCODING_PCM_16BIT, generatedSnd.length,
                 AudioTrack.MODE_STATIC);
         audioTrack.write(generatedSnd, 0, generatedSnd.length);
         audioTrack.play();
+        try {
+            Thread.sleep(2000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        audioTrack.release();
     }
 
 
