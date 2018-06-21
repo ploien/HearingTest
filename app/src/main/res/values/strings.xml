@@ -4,4 +4,5 @@
     <string name="button_no">No</string>
     <string name="yesButton">YES</string>
     <string name="startClick">Start</string>
+    <string name="current_user">userKey</string>
 </resources>

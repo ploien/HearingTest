@@ -59,8 +59,7 @@ public class TestActivity extends AppCompatActivity {
             synchronized (monitor) {
                 try {
                     monitor.wait();
-                } catch (Exception e) {
-                }
+                } catch (Exception ignored) {}
             }
         }
 
@@ -82,7 +81,7 @@ public class TestActivity extends AppCompatActivity {
     }
 
 
-    public void saveResults(String results) {
+    public void saveResults(String results){
 
     }
 
@@ -91,116 +90,141 @@ public class TestActivity extends AppCompatActivity {
     }
 
 
-    // This is the second iteration of the hearing test. It is a bit more complicated than the previous one.
-    // Firstly, there are now three loops in the test.
-    // 1. The for loop will keep track of what frequency we are testing. At the beginning of each for loop
-    //    iteration, the tone is reinitialized to a starting volume. All variables that track the testing
-    //    environment are reset to their initial values.
-    // 2. The first while loop finds what volume the tone should be tested at. The first time a user says yes,
-    //    it is noted. Once the user says no, however, they can keep saying no until the tone can be heard again.
-    //    Once the user states yes again, the loop ends.
-    // 3. The third while loop tests the hearing of the user. If the tone can be heard 3 out of 5 times, the test
-    //    moves on to the next frequency. If the tone was only heard 2 / 5 times, the frequency is retested.
+//     Below is an alpha example of how the test should run. Here are the steps for the code:
+//
+//     1. A boolean value is created to act as a gate, preventing testing on a specific frequency
+//        from ending before testing conditions are met. A mock boolean conditionsMet currently
+//        allows the while loop to always complete.
+//
+//     2. A for loop, simulating 16 tone tests is created.
+//
+//     3. The boolean, testingFrequency, is flagged as true in the beginning of each iteration of
+//        the for loop. This ensures that each tone is tested.
+//
+//     4. A sleep command is used to simulate the playing of the tone.
+//
+//     5. The booleans 'waiting' and 'buttonClicked' are set in order to allow the user's input
+//        to the yes / no buttons. The selection of either button allows the test to continue.
+//        the test currently uses an infinite while loop to simulate waiting for user input.
+//
+//     6. If the user clicked yes or no, reactions in the test would take place. For now, it simply
+//        changes the booleans declared at the beginning of TestActivity.
+//
+//     7. Since the conditions are always "Met", the testingFrequency boolean is switched to false,
+//        indicating the completion of the current frequency.
 
     public String test() {
 
         boolean testingFrequency;
-        boolean volumeFound; // placeholder for conditions for frequency met (3/5 tones heard at appropriate level)
+        boolean conditionsMet = false; // placeholder for conditions for frequency met (3/5 tones heard at appropriate level)
 
-
+        PlaySound play;
         //yesButton.setEnabled(false);
         //noButton.setEnabled(false);
 
         double frequencies[] = {1000, 2000, 4000, 8000, 1000, 500, 250, 125};
 
-        int yes; // How many times was the tone heard?
-        int no; //  How many times was the tone not heard?
-        boolean firstNo; // Has the user not heard the tone yet?
-        boolean firstYes; // Has the user heard the tone yet?
+        for (double frequency : frequencies) {
 
-        for (int i = 0; i < frequencies.length; ++i) {
-            PlaySound play = new PlaySound(); // Initialize a new PlaySound object (I think that we can make this work without re-initializing this, but for now it does. - AL)
-            play.initializeVolume(); // Initialize the volume of the tone
-            play = null; // lose the object to be cleaned up by garbage collection
-            yes = 0; // The user hasn't had a chance to hear a tone yet, so yes and no are initialized to 0
-            no = 0;
-            firstNo = false;
-            firstYes = false;
-            testingFrequency = true; // We are currently testing a new frequency!
-            volumeFound = false; // The volume that the tone should be reproduced at has not yet been determined.
 
-            while (!volumeFound) {
+            play = new PlaySound();
+            play.setFrequency(frequency);
+            testingFrequency = true;
 
-                play = new PlaySound(); // Initialize the playSound object
-                play.setFrequency(frequencies[i]); // set the frequency
+            boolean firstNo = false;
+            boolean yesAfterNo = false;
 
-                play.playSound(); // play the tone
+            int count = 0;
+            int yesCount = 0;
+            int noCount = 0;
 
-                // I commented this sleep out because I learned why our AudioTracks were crashing. We can only have 32 at a time, so I learned
-                // that AudioTrack.release() will free up all of the tracks currently holding memory. However, if I clear it too early, the tone
-                // will not play. I moved the thread.sleep into the .playSound() function.\
 
-//                try {
-//                    Thread.sleep(2000);
-//                } catch (InterruptedException e) {
-//                    e.printStackTrace();
-//                }
+            while (testingFrequency) {
 
-                this.waitForThread(); // The gate is locked until the user presses yes or no
+                conditionsMet = false;
 
-                if (yesClicked == true) {
+                // Play the sound here, simulated by Thread sleeping
+                play.genTone();
+                play.playSound();
+                //yesButton.setEnabled(true);
+                //noButton.setEnabled(true);
+                try {
+                    Thread.sleep(2000);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+                waitForThread(); // Current placeholder for test is waiting
+
+
+                if (yesClicked) {
+                    // do yes conditions (lower volume or tally result)
                     yesClicked = false;
-                    firstYes = true;
-                    if (!firstNo) {
+                    try {
+                        Thread.sleep(2000);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+
+                    //Conditions after we hear no the first time
+                    if (firstNo && (!yesAfterNo)) {
+                        yesAfterNo = true;
+                        ++yesCount;
+                        ++count;
+                    //After getting our first yes when increasing in volume
+                    } else if (firstNo) {
+                        ++yesCount;
+                        ++count;
+                    } else {
                         play.decreaseVolume();
                     }
-                } else if (noClicked == true) {
+
+                } else if (noClicked) {
+                    // increase volume, reset tally results
                     noClicked = false;
-                    firstNo = true;
+                    try {
+                        Thread.sleep(2000);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+
+                    //Conditions after we hear no the first time
+                    if (!firstNo) {
+                        firstNo = true;
+                        play.increaseVolume();
+                    //start going back up after hearing no for the first time
+                    } else {
+                        if(!yesAfterNo) {
+                            play.increaseVolume();
+                        } else {
+                            ++noCount;
+                            ++count;
+                        }
+                    }
+
+                }
+
+                //Once we've found the lowest hearable volume
+                //evaluate whether or no they've heard it 3/5 times
+                if ((count == 5) && (yesCount > 2)) {
+                    conditionsMet = true;
+                } else if (noCount > 2) {
+                    count = 0;
+                    yesCount = 0;
+                    noCount = 0;
                     play.increaseVolume();
-                    firstYes = false;
                 }
 
-                if (firstYes && firstNo) {
-                    volumeFound = true;
-                }
-                play = null;
-            }
 
-            while (testingFrequency == true) {
-                play = new PlaySound();
-                play.setFrequency(frequencies[i]);
-                play.playSound();
-
-//                try {
-//                    Thread.sleep(2000);
-//                } catch (InterruptedException e) {
-//                    e.printStackTrace();
-//                }
-
-                this.waitForThread();
-
-                if (yesClicked == true) {
-                    yesClicked = false;
-                    ++yes;
-                } else if (noClicked == true) {
-                    noClicked = false;
-                    ++no;
-                }
-
-                if (no > 2) { // if the user heard the tone only 2 times
-                    i--; // re-test the frequency
+                if (conditionsMet) {
                     testingFrequency = false;
-                } else if (yes > 2) { // if the user passed the test for the given tone
-                    testingFrequency = false;
+
                 }
-                play = null;
+
             }
 
         }
 
         return "done";
-    }
 
 //        Below is starter code for the actual test. Above is the demo test.
 //        double frequencies[] = {1000, 2000, 4000, 8000, 1000, 500, 250, 125};
@@ -220,6 +244,7 @@ public class TestActivity extends AppCompatActivity {
 //        }
 //
 //        return "done";
+    }
 
     public String screen() {
         String strongTestResults = test();
