@@ -16,7 +16,7 @@ public class PlaySound extends Activity {
     private final int numSamples = duration * sampleRate;
     private final double sample[] = new double[numSamples];
     private double freqOfTone = 1000; // hz
-    public static double volume;
+    public double volume = 12288;
     private double increase = 1638.4; //1638.4
     private double decrease = 3276.8; //3276.8 is what we actually want
 
@@ -27,7 +27,6 @@ public class PlaySound extends Activity {
         freqOfTone = newFreq;
     }
 
-    public void initializeVolume() {volume = 12288;}
 
     public void increaseVolume() {
 

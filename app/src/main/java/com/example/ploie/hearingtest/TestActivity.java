@@ -115,7 +115,6 @@ public class TestActivity extends AppCompatActivity {
 
     public String test() {
 
-        boolean testingFrequency;
         boolean conditionsMet = false; // placeholder for conditions for frequency met (3/5 tones heard at appropriate level)
 
         PlaySound play;
@@ -129,41 +128,31 @@ public class TestActivity extends AppCompatActivity {
 
             play = new PlaySound();
             play.setFrequency(frequency);
-            testingFrequency = true;
+
 
             boolean firstNo = false;
             boolean yesAfterNo = false;
+            conditionsMet = false;
 
             int count = 0;
             int yesCount = 0;
             int noCount = 0;
 
 
-            while (testingFrequency) {
+            while (!conditionsMet) {
 
-                conditionsMet = false;
 
                 // Play the sound here, simulated by Thread sleeping
                 play.genTone();
                 play.playSound();
                 //yesButton.setEnabled(true);
                 //noButton.setEnabled(true);
-                try {
-                    Thread.sleep(2000);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
                 waitForThread(); // Current placeholder for test is waiting
 
 
                 if (yesClicked) {
                     // do yes conditions (lower volume or tally result)
                     yesClicked = false;
-                    try {
-                        Thread.sleep(2000);
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
-                    }
 
                     //Conditions after we hear no the first time
                     if (firstNo && (!yesAfterNo)) {
@@ -178,14 +167,16 @@ public class TestActivity extends AppCompatActivity {
                         play.decreaseVolume();
                     }
 
-                } else if (noClicked) {
-                    // increase volume, reset tally results
-                    noClicked = false;
                     try {
-                        Thread.sleep(2000);
+                        Thread.sleep(1000);
                     } catch (InterruptedException e) {
                         e.printStackTrace();
                     }
+
+
+                } else if (noClicked) {
+                    // increase volume, reset tally results
+                    noClicked = false;
 
                     //Conditions after we hear no the first time
                     if (!firstNo) {
@@ -201,6 +192,13 @@ public class TestActivity extends AppCompatActivity {
                         }
                     }
 
+                    try {
+                        Thread.sleep(1000);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+
+
                 }
 
                 //Once we've found the lowest hearable volume
@@ -213,12 +211,7 @@ public class TestActivity extends AppCompatActivity {
                     noCount = 0;
                     play.increaseVolume();
                 }
-
-
-                if (conditionsMet) {
-                    testingFrequency = false;
-
-                }
+                
 
             }
 
