@@ -211,9 +211,11 @@ public class TestActivity extends AppCompatActivity {
                     noCount = 0;
                     play.increaseVolume();
                 }
-                
+
 
             }
+
+            //send info to json string
 
         }
 

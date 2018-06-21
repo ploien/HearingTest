@@ -16,9 +16,11 @@ public class PlaySound extends Activity {
     private final int numSamples = duration * sampleRate;
     private final double sample[] = new double[numSamples];
     private double freqOfTone = 1000; // hz
-    public double volume = 12288;
-    private double increase = 1638.4; //1638.4
-    private double decrease = 3276.8; //3276.8 is what we actually want
+    private static final double MAX_AMPLITUDE = 32768;
+    private double volume = (MAX_AMPLITUDE/Math.pow(Math.sqrt(10),7));
+    private double increase = Math.sqrt(5); //1638.4
+    private double decrease = Math.sqrt(10); //3276.8 is what we actually want
+    private int decibel = 30;
 
 
     private final byte generatedSnd[] = new byte[2 * numSamples];
@@ -28,24 +30,25 @@ public class PlaySound extends Activity {
     }
 
 
+    public int getDecibel() {
+        return decibel;
+    }
+
+
     public void increaseVolume() {
 
-        if (volume + increase < 32768) {
-            volume += increase;
-        }
-        else {
-            volume = 32768;
+        if((volume * increase) <= MAX_AMPLITUDE) {
+            volume *= increase;
+            decibel += 5;
+        } else {
+            volume = MAX_AMPLITUDE;
         }
     }
 
     public void decreaseVolume() {
 
-        if (volume - decrease > 1) {
-            volume -= decrease;
-        }
-        else {
-            volume = 250;
-        }
+        volume /= decrease;
+        decibel -= 10;
     }
 
     Handler handler = new Handler();
