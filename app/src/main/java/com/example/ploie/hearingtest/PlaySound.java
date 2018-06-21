@@ -30,8 +30,8 @@ public class PlaySound extends Activity {
     }
 
 
-    public int getDecibel() {
-        return decibel;
+    public String getDecibel() {
+        return Integer.toString(decibel);
     }
 
 
