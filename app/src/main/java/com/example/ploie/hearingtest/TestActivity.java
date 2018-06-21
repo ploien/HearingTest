@@ -122,7 +122,9 @@ public class TestActivity extends AppCompatActivity {
         //noButton.setEnabled(false);
 
         double frequencies[] = {1000, 2000, 4000, 8000, 1000, 500, 250, 125};
-
+        TestResults results = new TestResults();
+        String decibels[] = new String[8];
+        int i = 0;
         for (double frequency : frequencies) {
 
 
@@ -201,7 +203,7 @@ public class TestActivity extends AppCompatActivity {
 
                 }
 
-                //Once we've found the lowest hearable volume
+                //Once we've found the lowest audible volume
                 //evaluate whether or no they've heard it 3/5 times
                 if ((count == 5) && (yesCount > 2)) {
                     conditionsMet = true;
@@ -212,12 +214,15 @@ public class TestActivity extends AppCompatActivity {
                     play.increaseVolume();
                 }
 
-
             }
 
-            //send info to json string
+            decibels[i] = play.getDecibel();
+            ++i;
 
+            //send info to json string
         }
+
+        results.setDecibels(decibels);
 
         return "done";
 
@@ -245,6 +250,6 @@ public class TestActivity extends AppCompatActivity {
         String strongTestResults = test();
         String weakTestResults = test();
 
-        return "Screening Succesful";
+        return "Screening Successful";
     }
 }
