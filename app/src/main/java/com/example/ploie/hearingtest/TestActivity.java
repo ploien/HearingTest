@@ -1,5 +1,8 @@
 package com.example.ploie.hearingtest;
 
+import android.animation.Animator;
+import android.animation.AnimatorListenerAdapter;
+import android.animation.ValueAnimator;
 import android.content.Intent;
 import android.os.Handler;
 import android.os.Looper;
@@ -7,6 +10,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ProgressBar;
+import android.widget.TextView;
 
 import java.util.*;
 
@@ -115,6 +120,12 @@ public class TestActivity extends AppCompatActivity {
 
     public String test() {
 
+        final TextView frequencyView = findViewById(R.id.frequencyView);
+        final TextView decibelView = findViewById(R.id.decibelView);
+        final ProgressBar bar = findViewById(R.id.progressBar);
+
+
+
         boolean conditionsMet = false; // placeholder for conditions for frequency met (3/5 tones heard at appropriate level)
 
         PlaySound play;
@@ -125,7 +136,19 @@ public class TestActivity extends AppCompatActivity {
         TestResults results = new TestResults();
         String decibels[] = new String[8];
         int i = 0;
-        for (double frequency : frequencies) {
+        for (final double frequency : frequencies) {
+
+            runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    {
+                        frequencyView.setText(Double.toString(frequency ) + " Hz");
+
+
+                    }
+                }
+            });
+
 
 
             play = new PlaySound();
@@ -143,10 +166,51 @@ public class TestActivity extends AppCompatActivity {
 
             while (!conditionsMet) {
 
+                final String currentDecibel = play.getDecibel();
+
+
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        {
+                            decibelView.setText(currentDecibel + " dB");
+                        }
+                    }
+                });
+
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        {
+
+                            ValueAnimator animator = ValueAnimator.ofInt(0, bar.getMax());
+                            animator.setDuration(2250);
+                            animator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
+                                @Override
+                                public void onAnimationUpdate(ValueAnimator animation) {
+                                    bar.setProgress((Integer) animation.getAnimatedValue());
+                                }
+                            });
+                            animator.addListener(new AnimatorListenerAdapter() {
+                                @Override
+                                public void onAnimationEnd(Animator animation) {
+                                    super.onAnimationEnd(animation);
+                                    // start your activity here
+                                }
+                            });
+                            animator.start();
+
+                        }
+                    }
+                });
+
+
 
                 // Play the sound here, simulated by Thread sleeping
                 play.genTone();
                 play.playSound();
+
+
                 //yesButton.setEnabled(true);
                 //noButton.setEnabled(true);
                 waitForThread(); // Current placeholder for test is waiting
@@ -205,7 +269,7 @@ public class TestActivity extends AppCompatActivity {
 
                 //Once we've found the lowest audible volume
                 //evaluate whether or no they've heard it 3/5 times
-                if ((count == 5) && (yesCount > 2)) {
+                if ((yesCount > 2)) {
                     conditionsMet = true;
                 } else if (noCount > 2) {
                     count = 0;
