@@ -138,13 +138,12 @@ public class TestActivity extends AppCompatActivity {
         int i = 0;
         for (final double frequency : frequencies) {
 
+            int lowestYesVolume = 0;
             runOnUiThread(new Runnable() {
                 @Override
                 public void run() {
                     {
                         frequencyView.setText(Double.toString(frequency ) + " Hz");
-
-
                     }
                 }
             });
@@ -222,22 +221,22 @@ public class TestActivity extends AppCompatActivity {
                     //Conditions after we hear no the first time
                     if (firstNo && (!yesAfterNo)) {
                         yesAfterNo = true;
+                        lowestYesVolume = play.getDecibel();
                         ++yesCount;
-                        ++count;
                     //After getting our first yes when increasing in volume
                     } else if (firstNo) {
                         ++yesCount;
-                        ++count;
-                    } else {
-                        play.decreaseVolume();
+                        if (lowestYesVolume > play.getDecibel()) {
+                            lowestYesVolume = play.getDecibel();
+                            yesCount = 1;
+                        }
                     }
-
+                    play.decreaseVolume();
                     try {
                         Thread.sleep(1000);
                     } catch (InterruptedException e) {
                         e.printStackTrace();
                     }
-
 
                 } else if (noClicked) {
                     // increase volume, reset tally results
@@ -246,24 +245,16 @@ public class TestActivity extends AppCompatActivity {
                     //Conditions after we hear no the first time
                     if (!firstNo) {
                         firstNo = true;
-                        play.increaseVolume();
                     //start going back up after hearing no for the first time
-                    } else {
-                        if(!yesAfterNo) {
-                            play.increaseVolume();
-                        } else {
-                            ++noCount;
-                            ++count;
-                        }
+                    } else if (lowestYesVolume == play.getDecibel()) {
+                        ++noCount;
                     }
-
+                    play.increaseVolume();
                     try {
                         Thread.sleep(1000);
                     } catch (InterruptedException e) {
                         e.printStackTrace();
                     }
-
-
                 }
 
                 //Once we've found the lowest audible volume
@@ -271,9 +262,9 @@ public class TestActivity extends AppCompatActivity {
                 if ((yesCount > 2)) {
                     conditionsMet = true;
                 } else if (noCount > 2) {
-                    count = 0;
                     yesCount = 0;
                     noCount = 0;
+                    yesAfterNo = false;
                     play.increaseVolume();
                 }
 
