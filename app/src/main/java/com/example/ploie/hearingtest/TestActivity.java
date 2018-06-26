@@ -166,8 +166,7 @@ public class TestActivity extends AppCompatActivity {
 
             while (!conditionsMet) {
 
-                final String currentDecibel = play.getDecibel();
-
+                final String currentDecibel = Integer.toString(play.getDecibel());
 
                 runOnUiThread(new Runnable() {
                     @Override
@@ -280,7 +279,7 @@ public class TestActivity extends AppCompatActivity {
 
             }
 
-            decibels[i] = play.getDecibel();
+            decibels[i] = Integer.toString(play.getDecibel());
             ++i;
 
             //send info to json string
