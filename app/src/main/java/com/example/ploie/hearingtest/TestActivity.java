@@ -13,6 +13,8 @@ import android.widget.Button;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import com.google.gson.Gson;
+
 import java.util.*;
 
 public class TestActivity extends AppCompatActivity {
@@ -277,6 +279,9 @@ public class TestActivity extends AppCompatActivity {
         }
 
         results.setDecibels(decibels);
+
+        Gson gson = new Gson();
+        String toSend = gson.toJson(results);
 
         return "done";
 
