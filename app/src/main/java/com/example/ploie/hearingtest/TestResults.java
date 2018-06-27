@@ -1,14 +1,12 @@
 package com.example.ploie.hearingtest;
 
+import java.util.List;
+
 public class TestResults {
 
     private String ID;
-    private String[] frequencies;
-    private String[] decibels;
-
-    public String[] getFrequencies() {
-        return frequencies;
-    }
+    private List<String> frequencies;
+    private List<String> decibels;
 
     public String getID() {
         return ID;
@@ -18,11 +16,19 @@ public class TestResults {
         this.ID = ID;
     }
 
-    public String[] getDecibels() {
+    public List<String> getDecibels() {
         return decibels;
     }
 
-    public void setDecibels(String[] decibels) {
+    public void setDecibels(List<String> decibels) {
         this.decibels = decibels;
+    }
+
+    public List<String> getFrequencies() {
+        return frequencies;
+    }
+
+    public void setFrequencies(List<String> frequencies) {
+        this.frequencies = frequencies;
     }
 }

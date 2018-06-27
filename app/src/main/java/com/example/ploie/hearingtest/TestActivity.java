@@ -18,6 +18,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.gson.Gson;
 
+import java.text.DateFormat;
 import java.util.*;
 
 public class TestActivity extends AppCompatActivity {
@@ -26,7 +27,7 @@ public class TestActivity extends AppCompatActivity {
     public static boolean monitorState = false;
 
 
-    private boolean testing = false;
+    private TestResults finalResults;
     private boolean yesClicked = false;
     private boolean noClicked = false;
 
@@ -103,6 +104,11 @@ public class TestActivity extends AppCompatActivity {
         users.put("Andrew", new User(22, "Andrew", "Lundgren"));
 
         usersRef.setValue(users);
+
+        DatabaseReference resultsRef = usersRef.child("Andrew" + "/Tests");
+        Map<String, TestResults> results = new HashMap();
+        results.put("01", finalResults);
+        resultsRef.setValue(results);
     }
 
     public void displayResults(String results) {
@@ -149,8 +155,9 @@ public class TestActivity extends AppCompatActivity {
 
         double frequencies[] = {1000, 2000, 4000, 8000, 1000, 500, 250, 125};
         TestResults results = new TestResults();
-        String decibels[] = new String[8];
-        int i = 0;
+        List<String> decibels = new ArrayList<>();
+        List<String> testedFrequencies = new ArrayList<>();
+
         for (final double frequency : frequencies) {
 
             int lowestYesVolume = 0;
@@ -173,7 +180,6 @@ public class TestActivity extends AppCompatActivity {
             boolean yesAfterNo = false;
             conditionsMet = false;
 
-            int count = 0;
             int yesCount = 0;
             int noCount = 0;
 
@@ -284,17 +290,17 @@ public class TestActivity extends AppCompatActivity {
                 }
 
             }
-
-            decibels[i] = Integer.toString(play.getDecibel());
-            ++i;
-
+            play.increaseVolume();
+            play.increaseVolume();
+            decibels.add(Integer.toString(play.getDecibel()));
+            testedFrequencies.add(Double.toString(frequency));
             //send info to json string
         }
 
         results.setDecibels(decibels);
-
-        Gson gson = new Gson();
-        String toSend = gson.toJson(results);
+        results.setFrequencies(testedFrequencies);
+        results.setID(DateFormat.getDateTimeInstance().format(new Date()));
+        finalResults = results;
 
         return "done";
 
