@@ -7,4 +7,5 @@
     <string name="current_user">userKey</string>
     <string name="CurrentFrequency">Frequency</string>
     <string name="currentDecibel">Decibel</string>
+    <string name="onSaveClick">SAVE</string>
 </resources>

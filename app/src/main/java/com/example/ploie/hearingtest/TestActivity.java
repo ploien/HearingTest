@@ -6,6 +6,7 @@ import android.animation.ValueAnimator;
 import android.content.Intent;
 import android.os.Handler;
 import android.os.Looper;
+import android.provider.ContactsContract;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -13,6 +14,8 @@ import android.widget.Button;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 import com.google.gson.Gson;
 
 import java.util.*;
@@ -88,8 +91,18 @@ public class TestActivity extends AppCompatActivity {
     }
 
 
-    public void saveResults(String results){
+    public void saveResults(View view){
 
+        FirebaseDatabase database = FirebaseDatabase.getInstance();
+        DatabaseReference reference = database.getReference("server/saving-data/fireblog");
+
+        DatabaseReference usersRef = reference.child("Users");
+
+        Map<String, User> users = new HashMap();
+        users.put("Peter", new User(29, "Peter", "Oien"));
+        users.put("Andrew", new User(22, "Andrew", "Lundgren"));
+
+        usersRef.setValue(users);
     }
 
     public void displayResults(String results) {
