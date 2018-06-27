@@ -250,6 +250,7 @@ public class TestActivity extends AppCompatActivity {
                         if (lowestYesVolume > play.getDecibel()) {
                             lowestYesVolume = play.getDecibel();
                             yesCount = 1;
+                            noCount = 0;
                         }
                     }
                     play.decreaseVolume();
