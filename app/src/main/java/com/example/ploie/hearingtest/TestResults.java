@@ -4,17 +4,9 @@ import java.util.List;
 
 public class TestResults {
 
-    private String ID;
     private List<String> frequencies;
     private List<String> decibels;
 
-    public String getID() {
-        return ID;
-    }
-
-    public void setID(String ID) {
-        this.ID = ID;
-    }
 
     public List<String> getDecibels() {
         return decibels;

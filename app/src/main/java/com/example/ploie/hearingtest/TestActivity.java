@@ -94,20 +94,22 @@ public class TestActivity extends AppCompatActivity {
 
     public void saveResults(View view){
 
+        Bundle data = getIntent().getExtras();
+        User CurrentUser = data.getParcelable("user");
+
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         DatabaseReference reference = database.getReference("server/saving-data/fireblog");
 
         DatabaseReference usersRef = reference.child("Users");
 
         Map<String, User> users = new HashMap();
-        users.put("Peter", new User(29, "Peter", "Oien"));
-        users.put("Andrew", new User(22, "Andrew", "Lundgren"));
+        users.put(CurrentUser.username, CurrentUser);
 
         usersRef.setValue(users);
 
-        DatabaseReference resultsRef = usersRef.child("Andrew" + "/Tests");
+        DatabaseReference resultsRef = usersRef.child(CurrentUser.username + "/Tests");
         Map<String, TestResults> results = new HashMap();
-        results.put("01", finalResults);
+        results.put(DateFormat.getDateTimeInstance().format(new Date()), finalResults);
         resultsRef.setValue(results);
     }
 
@@ -250,6 +252,7 @@ public class TestActivity extends AppCompatActivity {
                         if (lowestYesVolume > play.getDecibel()) {
                             lowestYesVolume = play.getDecibel();
                             yesCount = 1;
+                            noCount = 0;
                         }
                     }
                     play.decreaseVolume();
@@ -299,7 +302,6 @@ public class TestActivity extends AppCompatActivity {
 
         results.setDecibels(decibels);
         results.setFrequencies(testedFrequencies);
-        results.setID(DateFormat.getDateTimeInstance().format(new Date()));
         finalResults = results;
 
         return "done";

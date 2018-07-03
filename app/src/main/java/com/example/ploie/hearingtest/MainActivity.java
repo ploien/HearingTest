@@ -15,6 +15,7 @@ import android.widget.Toast;
 public class MainActivity extends AppCompatActivity {
 
     static String CURRENT_USER = "bob";
+    private User CurrentUser = new User("arlundgren", "Andrew", "Lundgren");
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,6 +29,7 @@ public class MainActivity extends AppCompatActivity {
 
     public void newTest(View view) {
         Intent intent = new Intent(this, TestActivity.class);
+        intent.putExtra("user", CurrentUser);
         startActivity(intent);
     }
 
