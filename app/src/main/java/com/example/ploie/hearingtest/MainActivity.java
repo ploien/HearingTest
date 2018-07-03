@@ -12,19 +12,32 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Toast;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+
 public class MainActivity extends AppCompatActivity {
 
     static String CURRENT_USER = "bob";
     private User CurrentUser = new User("arlundgren", "Andrew", "Lundgren");
+    private FirebaseAuth mAuth;
+    private static final int RC_SIGN_IN = 123;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         SharedPreferences sharedPref = this.getPreferences(Context.MODE_PRIVATE);
+        mAuth = FirebaseAuth.getInstance();
         CURRENT_USER = sharedPref.getString(getString(R.string.current_user), CURRENT_USER);
         Toast.makeText(this, CURRENT_USER,
                 Toast.LENGTH_LONG).show();
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        FirebaseUser currentUser = mAuth.getCurrentUser();
     }
 
     public void newTest(View view) {
