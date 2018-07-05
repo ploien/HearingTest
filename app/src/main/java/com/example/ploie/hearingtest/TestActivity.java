@@ -282,7 +282,7 @@ public class TestActivity extends AppCompatActivity {
                 }
 
                 //Once we've found the lowest audible volume
-                //evaluate whether or no they've heard it 3/5 times
+                //evaluate whether they've heard it 3/5 times
                 if ((yesCount > 2)) {
                     conditionsMet = true;
                 } else if (noCount > 2) {
@@ -306,24 +306,6 @@ public class TestActivity extends AppCompatActivity {
 
         return "done";
 
-//        Below is starter code for the actual test. Above is the demo test.
-//        double frequencies[] = {1000, 2000, 4000, 8000, 1000, 500, 250, 125};
-//
-//        PlaySound sound = new PlaySound();
-//
-//        for (double frequency : frequencies) {
-//
-//            sound.setFrequency(frequency);
-//            sound.playSound();
-//            try {
-//                Thread.sleep(3000);
-//            } catch (InterruptedException e) {
-//                e.printStackTrace();
-//            }
-//
-//        }
-//
-//        return "done";
     }
 
     public String screen() {

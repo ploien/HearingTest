@@ -6,40 +6,30 @@ import android.os.Parcelable;
 public class User implements Parcelable {
 
     public String username;
-    public String firstName;
-    public String lastName;
+    public String name;
 
-    public User(String username, String firstName, String lastName) {
+    public User(String username, String name) {
         this.username = username;
-        this.firstName = firstName;
-        this.lastName = lastName;
+        this.name = name;
     }
 
     public User(Parcel in) {
-        String[] data = new String[3];
+        String[] data = new String[2];
 
         in.readStringArray(data);
 
         this.username = data[0];
-        this.firstName = data[1];
-        this.lastName = data[2];
+        this.name = data[1];
     }
 
-    public String getFirstName() {
-        return firstName;
+    public String getUsername() {return username;}
+    public void setUsername(String username) { this.username = username;}
+    public String getname() { return name; }
+    public void setname(String name) {
+        this.name = name;
     }
 
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
-    }
 
-    public String getLastName() {
-        return lastName;
-    }
-
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
-    }
 
     @Override
     public int describeContents() {
@@ -49,8 +39,7 @@ public class User implements Parcelable {
     @Override
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeStringArray(new String[] {this.username,
-                                            this.firstName,
-                                            this.lastName});
+                                            this.name});
     }
 
     public static final Parcelable.Creator CREATOR = new Parcelable.Creator() {
