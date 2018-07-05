@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.ActivityInfo;
 import android.media.AudioFormat;
 import android.media.AudioManager;
 import android.media.AudioTrack;
@@ -37,6 +38,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         setContentView(R.layout.activity_main);
         SharedPreferences sharedPref = this.getPreferences(Context.MODE_PRIVATE);
         CURRENT_USER = sharedPref.getString(getString(R.string.current_user), CURRENT_USER);
@@ -115,6 +117,11 @@ public class MainActivity extends AppCompatActivity {
 
         Intent intent = new Intent(this, TestActivity.class);
         intent.putExtra("user", CurrentUser);
+        startActivity(intent);
+    }
+
+    public void showGraph(View view) {
+        Intent intent = new Intent(this, GraphActivity.class);
         startActivity(intent);
     }
 

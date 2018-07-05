@@ -4,11 +4,13 @@ import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.animation.ValueAnimator;
 import android.content.Intent;
+import android.content.pm.ActivityInfo;
 import android.os.Handler;
 import android.os.Looper;
 import android.provider.ContactsContract;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ProgressBar;
@@ -18,32 +20,53 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.gson.Gson;
 
+import org.w3c.dom.Text;
+
 import java.text.DateFormat;
 import java.util.*;
 
+/**
+ * TestActivity starts a hearing test and
+ * and contains all the methods controlling
+ * the flow of the test.
+ */
 public class TestActivity extends AppCompatActivity {
 
+    /**
+     * Used to lock yes and no buttons until a
+     * given frequency has finished playing.
+     */
     public static final Object monitor = new Object();
+
+    /**
+     * Used for the monitor object
+     */
     public static boolean monitorState = false;
 
 
     private TestResults finalResults;
     private boolean yesClicked = false;
     private boolean noClicked = false;
+    final static String TEST_ACTIVITY = "TestActivity";
 
     //Button yesButton = (Button) findViewById(R.id.yesButton);
     //Button noButton = (Button) findViewById(R.id.noButton);
     //Button startButton = (Button) findViewById(R.id.button3);
 
     @Override
+    /**
+     * Sets view for Test activity
+     * @return void
+     */
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         setContentView(R.layout.activity_test);
         Intent intent = getIntent();
 
     }
 
-    public static void unlockWaiter() {
+    private static void unlockWaiter() {
         synchronized (monitor) {
             monitorState = false;
             monitor.notifyAll();
@@ -51,19 +74,27 @@ public class TestActivity extends AppCompatActivity {
     }
 
 
+    /**
+     * Sets yesClick to true when user clicks yes
+     * @param view
+     */
     public void onYesClick(View view) {
 
         yesClicked = true;
         unlockWaiter();
     }
 
+    /**
+     * Sets noClick to true when user clicks no
+     * @param view
+     */
     public void onNoClick(View view) {
 
         noClicked = true;
         unlockWaiter();
     }
 
-    public static void waitForThread() {
+    private static void waitForThread() {
 
         monitorState = true;
         while (monitorState) {
@@ -77,6 +108,12 @@ public class TestActivity extends AppCompatActivity {
     }
 
 
+    /**
+     * Runs the Hearing test when startClick is clicked
+     * (runs on background thread)
+     * @return void
+     * @param view
+     */
     public void onStartClick(View view) {
 
         //startButton.setEnabled(false);
@@ -92,7 +129,7 @@ public class TestActivity extends AppCompatActivity {
     }
 
 
-    public void saveResults(View view){
+    private void saveResults(View view){
 
         Bundle data = getIntent().getExtras();
         User CurrentUser = data.getParcelable("user");
@@ -113,7 +150,7 @@ public class TestActivity extends AppCompatActivity {
         resultsRef.setValue(results);
     }
 
-    public void displayResults(String results) {
+    private void displayResults(String results) {
 
     }
 
@@ -141,7 +178,8 @@ public class TestActivity extends AppCompatActivity {
 //     7. Since the conditions are always "Met", the testingFrequency boolean is switched to false,
 //        indicating the completion of the current frequency.
 
-    public String test() {
+
+    private void test() {
 
         final TextView frequencyView = findViewById(R.id.frequencyView);
         final TextView decibelView = findViewById(R.id.decibelView);
@@ -161,6 +199,8 @@ public class TestActivity extends AppCompatActivity {
         List<String> testedFrequencies = new ArrayList<>();
 
         for (final double frequency : frequencies) {
+
+            Log.d(TEST_ACTIVITY, "New Frequency: " + Double.toString(frequency));
 
             int lowestYesVolume = 0;
             runOnUiThread(new Runnable() {
@@ -295,6 +335,7 @@ public class TestActivity extends AppCompatActivity {
             }
             play.increaseVolume();
             play.increaseVolume();
+            Log.d(TEST_ACTIVITY, "Saved decibel: " + Double.toString(play.getDecibel()));
             decibels.add(Integer.toString(play.getDecibel()));
             testedFrequencies.add(Double.toString(frequency));
             //send info to json string
@@ -304,14 +345,8 @@ public class TestActivity extends AppCompatActivity {
         results.setFrequencies(testedFrequencies);
         finalResults = results;
 
-        return "done";
 
     }
 
-    public String screen() {
-        String strongTestResults = test();
-        String weakTestResults = test();
 
-        return "Screening Successful";
-    }
 }

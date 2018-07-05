@@ -6,6 +6,7 @@ import android.media.AudioManager;
 import android.media.AudioTrack;
 import android.os.Bundle;
 import android.os.Handler;
+import android.util.Log;
 
 /**
  * PlaySound is used to generate tones at specific frequencies for the screening.
@@ -24,6 +25,7 @@ public class PlaySound extends Activity {
     private double increase = Math.sqrt(5); //1638.4
     private double decrease = Math.sqrt(10); //3276.8 is what we actually want
     private int decibel = 30;
+    private final String TAG = "PlaySound";
 
 
     private final byte generatedSnd[] = new byte[2 * numSamples];
@@ -127,7 +129,7 @@ public class PlaySound extends Activity {
         try {
             Thread.sleep(2000);
         } catch (InterruptedException e) {
-            e.printStackTrace();
+            Log.e(TAG, "Error line 113, Thread interrupted");
         }
         audioTrack.release();
     }
