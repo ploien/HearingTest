@@ -95,6 +95,10 @@ public class MainActivity extends AppCompatActivity {
 //        alert.show();
 //    }
 
+    /**
+     * newTest is used to initiate a new test for the user when they click the "New Test" button.
+     * @param view
+     */
     public void newTest(View view) {
 
 //        final Thread thread = new Thread(new Runnable() {

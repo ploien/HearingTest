@@ -7,6 +7,9 @@ import android.media.AudioTrack;
 import android.os.Bundle;
 import android.os.Handler;
 
+/**
+ * PlaySound is used to generate tones at specific frequencies for the screening.
+ */
 public class PlaySound extends Activity {
 
     // originally from http://marblemice.blogspot.com/2010/04/generate-and-play-tone-in-android.html
@@ -25,16 +28,26 @@ public class PlaySound extends Activity {
 
     private final byte generatedSnd[] = new byte[2 * numSamples];
 
+    /**
+     * Set the frequency that the tone should be played at.
+     * @param newFreq
+     */
     public void setFrequency(double newFreq) {
         freqOfTone = newFreq;
     }
 
-
+    /**
+     * Get the current decibel level of the tone that may be produced.
+     * @return decibel
+     */
     public int getDecibel() {
         return decibel;
     }
 
 
+    /**
+     * Used to increase the volume of the tone by 5dB at a time.
+     */
     public void increaseVolume() {
 
         if((volume * increase) <= MAX_AMPLITUDE) {
@@ -45,6 +58,9 @@ public class PlaySound extends Activity {
         }
     }
 
+    /**
+     * Used to decrease the volume of a tone by 10dB at a time.
+     */
     public void decreaseVolume() {
 
         volume /= decrease;
