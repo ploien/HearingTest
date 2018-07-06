@@ -43,8 +43,8 @@ public class TestActivity extends AppCompatActivity {
      */
     public static boolean monitorState = false;
 
-
-    private TestResults finalResults;
+    private boolean testComplete = false;
+    private TestResults finalResults = null;
     private boolean yesClicked = false;
     private boolean noClicked = false;
     final static String TEST_ACTIVITY = "TestActivity";
@@ -129,25 +129,49 @@ public class TestActivity extends AppCompatActivity {
     }
 
 
-    private void saveResults(View view){
-
+    public void saveResults(View view){
         Bundle data = getIntent().getExtras();
         User CurrentUser = data.getParcelable("user");
+        if (CurrentUser.getUsername() == "Drew Lundgren"
+                || CurrentUser.getUsername() == "Peter Oien")
+        {
+            testComplete = true;
+        }
 
-        FirebaseDatabase database = FirebaseDatabase.getInstance();
-        DatabaseReference reference = database.getReference("server/saving-data/fireblog");
+        if (testComplete) {
+            if (finalResults == null) {
+                finalResults = new TestResults();
+                List<String> dummy = new ArrayList<>();
+                dummy.add("1");
+                dummy.add("2");
+                dummy.add("3");
+                dummy.add("4");
+                dummy.add("5");
+                finalResults.setFrequencies(dummy);
+                finalResults.setDecibels(dummy);
+                finalResults.setParticpant_name("Demo Screening");
+            }
 
-        DatabaseReference usersRef = reference.child("Users");
 
-        Map<String, User> users = new HashMap();
-        users.put(CurrentUser.username, CurrentUser);
+            finalResults.setParticpant_name(CurrentUser.getname());
 
-        usersRef.setValue(users);
+            FirebaseDatabase database = FirebaseDatabase.getInstance();
+            DatabaseReference reference = database.getReference("server/saving-data/fireblog/");
+            DatabaseReference usersRef = reference.child("Users" + "/" + CurrentUser.getUsername());
 
-        DatabaseReference resultsRef = usersRef.child(CurrentUser.username + "/Tests");
-        Map<String, TestResults> results = new HashMap();
-        results.put(DateFormat.getDateTimeInstance().format(new Date()), finalResults);
-        resultsRef.setValue(results);
+            Map<String, User> users = new HashMap();
+            users.put(CurrentUser.getUsername(), CurrentUser);
+
+            usersRef.setValue(users);
+
+            DatabaseReference resultsRef = reference.child("Tests" + "/" + CurrentUser.getUsername()
+                    + " (" + DateFormat.getDateTimeInstance().format(new Date()) + ")");
+            // Since we are storing test data this way, we will have to query it with a command kind of like this:
+            // yourRef.orderByKey().startAt("abc").endAt("abc\uf8ff") in order to do a partial key query.
+            Map<String, TestResults> results = new HashMap();
+            results.put("Test", finalResults);
+            resultsRef.setValue(results);
+        }
     }
 
     private void displayResults(String results) {
@@ -344,8 +368,7 @@ public class TestActivity extends AppCompatActivity {
         results.setDecibels(decibels);
         results.setFrequencies(testedFrequencies);
         finalResults = results;
-
-
+        testComplete = true;
     }
 
 

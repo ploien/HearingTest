@@ -9,7 +9,15 @@ public class TestResults {
 
     private List<String> frequencies;
     private List<String> decibels;
+    private String participant_name;
 
+    public String getParticipant_name() {
+        return participant_name;
+    }
+
+    public void setParticpant_name(String participant_name) {
+        this.participant_name = participant_name;
+    }
 
     /**
      * This returns a list of strings of the decibels the user was able to hear specific tones at.

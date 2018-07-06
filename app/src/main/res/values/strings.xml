@@ -8,4 +8,7 @@
     <string name="CurrentFrequency">Frequency</string>
     <string name="currentDecibel">Decibel</string>
     <string name="onSaveClick">SAVE</string>
+    <string name="InfoExplain">Please Enter the Name of the Screening Participant</string>
+    <string name="beginTest">Begin Test</string>
+    <string name="empty" />
 </resources>

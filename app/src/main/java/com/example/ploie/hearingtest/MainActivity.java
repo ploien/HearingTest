@@ -76,26 +76,6 @@ public class MainActivity extends AppCompatActivity {
         startActivityForResult(AuthUI.getInstance().createSignInIntentBuilder().build(), RC_SIGN_IN);
     }
 
-//    public void setTesterName() {
-//
-//        AlertDialog.Builder alert = new AlertDialog.Builder(this);
-//
-//        alert.setTitle("Tester Name");
-//        alert.setMessage("What is the name of the person taking the test?");
-//
-//// Set an EditText view to get user input
-//        final EditText input = new EditText(this);
-//        alert.setView(input);
-//
-//        alert.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
-//            public void onClick(DialogInterface dialog, int whichButton) {
-//                CurrentUser = new User(User.getEmail(), input.getText().toString());
-////                unlockWaiter();
-//            }
-//        });
-//
-//        alert.show();
-//    }
 
     /**
      * newTest is used to initiate a new test for the user when they click the "New Test" button.
@@ -113,9 +93,9 @@ public class MainActivity extends AppCompatActivity {
 //        });
 //        thread.start();
 //        waitForThread();
-        CurrentUser = new User(User.getEmail(), User.getDisplayName());
+        CurrentUser = new User(User.getDisplayName(), "No Name Provided");
 
-        Intent intent = new Intent(this, TestActivity.class);
+        Intent intent = new Intent(this, PreTestActivity.class);
         intent.putExtra("user", CurrentUser);
         startActivity(intent);
     }
@@ -140,26 +120,5 @@ public class MainActivity extends AppCompatActivity {
         super.onResume();
 
     }
-
-    public static void unlockWaiter() {
-        synchronized (monitor) {
-            monitorState = false;
-            monitor.notifyAll();
-        }
-    }
-
-    public static void waitForThread() {
-
-        monitorState = true;
-        while (monitorState) {
-            synchronized (monitor) {
-                try {
-                    monitor.wait();
-                } catch (Exception ignored) {}
-            }
-        }
-
-    }
-
 
 }
