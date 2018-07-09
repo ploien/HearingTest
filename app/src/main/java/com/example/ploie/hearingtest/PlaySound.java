@@ -14,7 +14,7 @@ import android.util.Log;
 public class PlaySound extends Activity {
 
     // originally from http://marblemice.blogspot.com/2010/04/generate-and-play-tone-in-android.html
-    // and modified by Steve Pomeroy <steve@staticfree.info>
+    // and modified by Steve Pomeroy <steve@staticfree.info>. Also modified by Peter Oien and Andrew Lundgren
     private final int duration = 2; // seconds
     private final int sampleRate = 44100;
     private final int numSamples = duration * sampleRate;
