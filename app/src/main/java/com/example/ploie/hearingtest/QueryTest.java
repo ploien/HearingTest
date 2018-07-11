@@ -1,15 +1,19 @@
 package com.example.ploie.hearingtest;
 
 import android.content.Intent;
+import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
+import com.google.firebase.database.ValueEventListener;
 
 public class QueryTest extends AppCompatActivity {
 
@@ -29,5 +33,16 @@ public class QueryTest extends AppCompatActivity {
         Query query = userRef.orderByKey().
                       startAt("Fake Tester (Jul 6, 2018 12:42:54 PM)").
                       endAt("Fake Tester (Jul 6, 2018 12:42:54 PM)");
+
+        query.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot snapshot) {
+                System.out.println(snapshot.getValue());
+            }
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+            }
+        });
+
     }
 }
