@@ -52,13 +52,13 @@ public class GraphActivity extends AppCompatActivity {
         frequencies.add("500");
 
         List<String> decibels = new ArrayList<>();
-        decibels.add("20");
-        decibels.add("20");
         decibels.add("10");
-        decibels.add("20");
-        decibels.add("10");
-        decibels.add("10");
-        decibels.add("10");
+        decibels.add("30");
+        decibels.add("45");
+        decibels.add("60");
+        decibels.add("70");
+        decibels.add("85");
+        decibels.add("105");
 
 
         results.setFrequencies(frequencies);
@@ -73,16 +73,18 @@ public class GraphActivity extends AppCompatActivity {
 
         graph.getViewport().setMinX(125);
         graph.getViewport().setMaxX(8000);
+
         graph.getViewport().setMinY(-20);
         graph.getViewport().setMaxY(125);
+
 
         graph.getViewport().setYAxisBoundsManual(true);
         graph.getViewport().setXAxisBoundsManual(true);
 
 
         PointsGraphSeries<DataPoint> series3 = new PointsGraphSeries<>(dataPoints);
-        series3.setShape(PointsGraphSeries.Shape.TRIANGLE);
-        series3.setColor(Color.YELLOW);
+        series3.setShape(PointsGraphSeries.Shape.POINT);
+        //series3.setColor(Color.YELLOW);
         graph.addSeries(series3);
 
         GridLabelRenderer XLabel = graph.getGridLabelRenderer();

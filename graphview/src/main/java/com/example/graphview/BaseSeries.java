@@ -96,6 +96,9 @@ public abstract class BaseSeries<E extends DataPointInterface> implements Series
     private List<WeakReference<GraphView>> mGraphViews;
     private Boolean mIsCursorModeCache;
 
+    /**
+     * @return List of whatever type mData is
+     */
     public List<E> getmData() {
         return mData;
     }

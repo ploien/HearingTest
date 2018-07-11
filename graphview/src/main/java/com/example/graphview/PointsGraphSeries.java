@@ -170,7 +170,7 @@ public class PointsGraphSeries<E extends DataPointInterface> extends BaseSeries<
         double lastEndX = 0;
 
         // draw data
-        mPaint.setColor(getColor());
+        ///mPaint.setColor(getColor());
 
         double diffY = maxY - minY;
         double diffX = maxX - minX;
@@ -188,11 +188,29 @@ public class PointsGraphSeries<E extends DataPointInterface> extends BaseSeries<
         double valX = 0;
         while (values.hasNext()) {
 
+            int selectedColor;
             E value = values.next();
+            double yVal = value.getY();
 
-            double valY = value.getY() - minY;
+            double valY = yVal - minY;
             double ratY = valY / diffY;
             double y = graphHeight * ratY;
+
+            if (yVal < 25) {
+                mPaint.setColor(Color.GREEN);
+            } else if ((yVal <= 40) && (yVal > 25)) {
+                mPaint.setColor(Color.YELLOW);
+            } else if ((yVal <= 55) && (yVal > 40)) {
+                //orange
+                selectedColor = Color.rgb(255, 165, 0);
+                mPaint.setColor(selectedColor);
+            } else if ((yVal <= 70) && (yVal > 55)) {
+                mPaint.setColor(Color.RED);
+            } else if ((yVal <= 90) && (yVal > 70)) {
+                mPaint.setColor(Color.MAGENTA);
+            } else if ((yVal > 90)){
+                mPaint.setColor(Color.BLACK);
+            }
 
             //double valX = value.getX() - minX;
             double ratX = valX / diffX;
@@ -220,6 +238,7 @@ public class PointsGraphSeries<E extends DataPointInterface> extends BaseSeries<
             float endX = (float) x + (graphLeft + 1);
             float endY = (float) (graphTop - y) + graphHeight;
             registerDataPoint(endX, endY, value);
+
 
             // draw data point
             if (!overdraw) {
