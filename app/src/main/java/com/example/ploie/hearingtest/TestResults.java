@@ -1,5 +1,10 @@
 package com.example.ploie.hearingtest;
 
+import android.graphics.Point;
+
+import com.example.graphview.DataPoint;
+
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -50,4 +55,37 @@ public class TestResults {
     public void setFrequencies(List<String> frequencies) {
         this.frequencies = frequencies;
     }
+
+
+
+    /**
+     * SortedPoints takes the list of decibels and frequencies and combines them
+     * into a sorted list of DataPoints.
+     * @return List<DataPoint> to be used in creating the graph that will display
+     * the results
+     */
+    public DataPoint[] sortedPoints() {
+
+        DataPoint[] dataPoints = new DataPoint[frequencies.size()];
+
+        for(int i = 0; i < dataPoints.length; i++) {
+
+                DataPoint p = new DataPoint(Integer.parseInt(frequencies.get(i)), Integer.parseInt(decibels.get(i)));
+                dataPoints[i] = p;
+        }
+
+        int n = dataPoints.length;
+        for (int i = 0; i < n-1; i++)
+            for (int j = 0; j < n-i-1; j++)
+                if (dataPoints[j].getX() > dataPoints[j+1].getX())
+                {
+                    // swap temp and arr[i]
+                    DataPoint temp = dataPoints[j];
+                    dataPoints[j] = dataPoints[j+1];
+                    dataPoints[j+1] = temp;
+                }
+
+        return dataPoints;
+    }
 }
+

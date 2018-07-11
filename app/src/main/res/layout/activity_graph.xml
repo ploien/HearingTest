@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     tools:context=".GraphActivity">
 
-    <com.jjoe64.graphview.GraphView
+    <com.example.graphview.GraphView
         android:id="@+id/graph"
         android:layout_width="493dp"
         android:layout_height="292dp"
