@@ -42,23 +42,25 @@ public class GraphActivity extends AppCompatActivity {
 
         TestResults results = new TestResults();
 
-        List<String> frequencies = new ArrayList<>();
-        frequencies.add("1000");
-        frequencies.add("250");
-        frequencies.add("125");
-        frequencies.add("4000");
-        frequencies.add("8000");
-        frequencies.add("2000");
-        frequencies.add("500");
+        ArrayList<String> frequencies =  (ArrayList<String>) getIntent().getSerializableExtra("testFrequencies");
+//        frequencies.add("1000");
+//        frequencies.add("250");
+//        frequencies.add("125");
+//        frequencies.add("4000");
+//        frequencies.add("8000");
+//        frequencies.add("2000");
+//        frequencies.add("500");
+//        frequencies.add("1000");
 
-        List<String> decibels = new ArrayList<>();
-        decibels.add("10");
-        decibels.add("30");
-        decibels.add("45");
-        decibels.add("60");
-        decibels.add("70");
-        decibels.add("85");
-        decibels.add("105");
+        ArrayList<String> decibels = (ArrayList<String>) getIntent().getSerializableExtra("testDecibels");
+//        decibels.add("10");
+//        decibels.add("30");
+//        decibels.add("45");
+//        decibels.add("60");
+//        decibels.add("70");
+//        decibels.add("85");
+//        decibels.add("105");
+//        decibels.add("35");
 
 
         results.setFrequencies(frequencies);
