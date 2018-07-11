@@ -11,4 +11,5 @@
     <string name="InfoExplain">Please Enter the Name of the Screening Participant</string>
     <string name="beginTest">Begin Test</string>
     <string name="empty" />
+    <string name="test_query">Test Query</string>
 </resources>

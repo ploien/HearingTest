@@ -19,7 +19,8 @@
         <activity android:name=".TestActivity" />
         <activity android:name=".UserMenuActivity" />
         <activity android:name=".GraphActivity" />
-        <activity android:name=".PreTestActivity"></activity>
+        <activity android:name=".PreTestActivity" />
+        <activity android:name=".QueryTest"></activity>
     </application>
 
 </manifest>
