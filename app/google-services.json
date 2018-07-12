@@ -31,6 +31,14 @@
           }
         },
         {
+          "client_id": "901349265135-ru6o555jap7q21g2qehkbd9873e0akuj.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.ploie.hearingtest",
+            "certificate_hash": "87c9c1927bbb898990aab30cf3449d165e54e8c7"
+          }
+        },
+        {
           "client_id": "901349265135-hj12jthd6e9mr42ob97uhn9ivskspiuj.apps.googleusercontent.com",
           "client_type": 3
         }

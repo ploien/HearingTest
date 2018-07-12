@@ -48,6 +48,8 @@ public class TestActivity extends AppCompatActivity {
     private boolean yesClicked = false;
     private boolean noClicked = false;
     final static String TEST_ACTIVITY = "TestActivity";
+    public ArrayList<String> testFrequencies = null;
+    public ArrayList<String> testDecibels = null;
 
     //Button yesButton = (Button) findViewById(R.id.yesButton);
     //Button noButton = (Button) findViewById(R.id.noButton);
@@ -141,7 +143,7 @@ public class TestActivity extends AppCompatActivity {
         if (testComplete) {
             if (finalResults == null) {
                 finalResults = new TestResults();
-                List<String> dummy = new ArrayList<>();
+                ArrayList<String> dummy = new ArrayList<>();
                 dummy.add("1");
                 dummy.add("2");
                 dummy.add("3");
@@ -171,12 +173,11 @@ public class TestActivity extends AppCompatActivity {
             Map<String, TestResults> results = new HashMap();
             results.put("Test", finalResults);
             resultsRef.setValue(results);
+
+            displayResults();
         }
     }
 
-    private void displayResults(String results) {
-
-    }
 
 
 //     Below is an alpha example of how the test should run. Here are the steps for the code:
@@ -202,6 +203,13 @@ public class TestActivity extends AppCompatActivity {
 //     7. Since the conditions are always "Met", the testingFrequency boolean is switched to false,
 //        indicating the completion of the current frequency.
 
+    private void displayResults() {
+        Intent intent = new Intent(this, GraphActivity.class);
+        intent.putExtra("testFrequencies", testFrequencies);
+        intent.putExtra("testDecibels", testDecibels);
+        startActivity(intent);
+    }
+
 
     private void test() {
 
@@ -219,8 +227,8 @@ public class TestActivity extends AppCompatActivity {
 
         double frequencies[] = {1000, 2000, 4000, 8000, 1000, 500, 250, 125};
         TestResults results = new TestResults();
-        List<String> decibels = new ArrayList<>();
-        List<String> testedFrequencies = new ArrayList<>();
+        ArrayList<String> decibels = new ArrayList<>();
+        ArrayList<String> testedFrequencies = new ArrayList<>();
 
         for (final double frequency : frequencies) {
 
@@ -364,6 +372,9 @@ public class TestActivity extends AppCompatActivity {
             testedFrequencies.add(Double.toString(frequency));
             //send info to json string
         }
+
+        testFrequencies = testedFrequencies;
+        testDecibels = decibels;
 
         results.setDecibels(decibels);
         results.setFrequencies(testedFrequencies);
