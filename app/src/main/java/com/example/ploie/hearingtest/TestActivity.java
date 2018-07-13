@@ -172,8 +172,10 @@ public class TestActivity extends AppCompatActivity {
             // yourRef.orderByKey().startAt("abc").endAt("abc\uf8ff") in order to do a partial key query.
             Map<String, TestResults> results = new HashMap();
             results.put("Test", finalResults);
-            resultsRef.setValue(results);
+           // resultsRef.setValue(results);
 
+            DatabaseReference dummy = FirebaseDatabase.getInstance().getReference("server/saving-data/fireblog/Tests/");
+            dummy.child(CurrentUser.getUsername() + ": " + finalResults.getParticipant_name()).setValue(finalResults.getParticipant_name() + " (some results)");
             displayResults();
         }
     }

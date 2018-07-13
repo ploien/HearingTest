@@ -100,6 +100,11 @@ public class MainActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
+    public void queryTest(View view) {
+        Intent intent = new Intent(this, QueryTest.class);
+        startActivity(intent);
+    }
+
     public void showGraph(View view) {
         Intent intent = new Intent(this, GraphActivity.class);
         startActivity(intent);

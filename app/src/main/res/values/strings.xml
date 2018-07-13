@@ -12,4 +12,5 @@
     <string name="beginTest">Begin Test</string>
     <string name="empty" />
     <string name="test_query">Test Query</string>
+    <string name="queryTest">Test Query</string>
 </resources>
