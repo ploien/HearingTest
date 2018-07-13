@@ -263,14 +263,11 @@ public class PointsGraphSeries<E extends DataPointInterface> extends BaseSeries<
                 }
             }
 
+            //Display text that shows the decibel level, above each point on the graph
             mPaint.setColor(Color.BLACK);
-            mPaint.setTextSize(24);
+            mPaint.setTextSize(32);
             mPaint.setFakeBoldText(true);
-            
             canvas.drawText(Double.toString(value.getY()) + " dB", endX - 15, (endY - 25), mPaint);
-//            mPaint.setColor(Color.BLACK);
-//            mPaint.setTextSize(16);
-//            canvas.drawText(Double.toString(value.getY()), endX, endY + 10, mPaint);
 
             i++;
 
