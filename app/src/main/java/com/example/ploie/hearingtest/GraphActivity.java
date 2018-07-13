@@ -1,6 +1,7 @@
 package com.example.ploie.hearingtest;
 
 import android.content.pm.ActivityInfo;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 
@@ -71,7 +72,7 @@ public class GraphActivity extends AppCompatActivity {
         //LineGraphSeries<DataPoint> series = new LineGraphSeries<>(dataPoints);
         //graph.addSeries(series);
 
-        graph.getViewport().setMinX(125);
+        graph.getViewport().setMinX(0);
         graph.getViewport().setMaxX(8000);
 
         graph.getViewport().setMinY(-20);
@@ -84,17 +85,19 @@ public class GraphActivity extends AppCompatActivity {
 
         PointsGraphSeries<DataPoint> series3 = new PointsGraphSeries<>(dataPoints);
         series3.setShape(PointsGraphSeries.Shape.TRIANGLE);
-        //series3.setColor(Color.YELLOW);
         graph.addSeries(series3);
 
-        GridLabelRenderer XLabel = graph.getGridLabelRenderer();
-        XLabel.setHorizontalAxisTitle("Frequency (Hz)");
+        graph.setTitle("Test Results");
 
-        GridLabelRenderer YLabel = graph.getGridLabelRenderer();
-        YLabel.setVerticalAxisTitle("Volume (dB)");
+        GridLabelRenderer labels = graph.getGridLabelRenderer();
+        labels.setPadding(48);
+        labels.setTextSize(36);
+        labels.setHorizontalAxisTitle("Frequency (Hz)");
+        labels.setVerticalAxisTitle("Volume (dB)");
 
-        XLabel.setNumHorizontalLabels(dataPoints.length);
+        labels.setNumHorizontalLabels(dataPoints.length);
 
-        //graph.setPadding(32,16,32,16);
-}
+
+
+    }
 }

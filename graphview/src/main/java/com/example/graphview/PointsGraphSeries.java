@@ -201,7 +201,9 @@ public class PointsGraphSeries<E extends DataPointInterface> extends BaseSeries<
             if (yVal < 25) {
                 mPaint.setColor(Color.GREEN);
             } else if ((yVal <= 40) && (yVal > 25)) {
-                mPaint.setColor(Color.YELLOW);
+                //Yellow
+                selectedColor = Color.rgb(244, 226, 66);
+                mPaint.setColor(selectedColor);
             } else if ((yVal <= 55) && (yVal > 40)) {
                 //orange
                 selectedColor = Color.rgb(255, 165, 0);

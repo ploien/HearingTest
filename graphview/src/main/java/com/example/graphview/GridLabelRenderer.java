@@ -1501,6 +1501,7 @@ public class GridLabelRenderer {
     public int getPadding() {
         return mStyles.padding;
     }
+    
 
     /**
      * @param textSize  the general text size of the axis titles.
