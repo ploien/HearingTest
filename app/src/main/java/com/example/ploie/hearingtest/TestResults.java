@@ -1,11 +1,10 @@
 package com.example.ploie.hearingtest;
 
-import android.graphics.Point;
+
 
 import com.example.graphview.DataPoint;
-
 import java.util.ArrayList;
-import java.util.List;
+
 
 /**
  * TestResults stores the information for the User's test results.

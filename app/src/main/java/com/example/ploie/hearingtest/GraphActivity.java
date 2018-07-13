@@ -1,19 +1,17 @@
 package com.example.ploie.hearingtest;
 
 import android.content.pm.ActivityInfo;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 
 import com.example.graphview.DataPoint;
 import com.example.graphview.GraphView;
 import com.example.graphview.GridLabelRenderer;
-import com.example.graphview.LineGraphSeries;
 import com.example.graphview.PointsGraphSeries;
-import com.example.graphview.StaticLabelsFormatter;
+
 
 import java.util.ArrayList;
-import java.util.List;
+
 
 
 public class GraphActivity extends AppCompatActivity {
@@ -42,32 +40,32 @@ public class GraphActivity extends AppCompatActivity {
 
         TestResults results = new TestResults();
 
-        ArrayList<String> frequencies = (ArrayList<String>) getIntent().getSerializableExtra("testFrequencies");
-//        frequencies.add("1000");
-//        frequencies.add("250");
-//        frequencies.add("125");
-//        frequencies.add("4000");
-//        frequencies.add("8000");
-//        frequencies.add("2000");
-//        frequencies.add("500");
-//        frequencies.add("1000");
+        ArrayList<String> frequencies = new ArrayList<>();//(ArrayList<String>) getIntent().getSerializableExtra("testFrequencies");
+        frequencies.add("1000");
+        frequencies.add("250");
+        frequencies.add("125");
+        frequencies.add("4000");
+        frequencies.add("8000");
+        frequencies.add("2000");
+        frequencies.add("500");
+        frequencies.add("1000");
 
-        ArrayList<String> decibels = (ArrayList<String>) getIntent().getSerializableExtra("testDecibels");
-//        decibels.add("35");
-//        decibels.add("30");
-//        decibels.add("45");
-//        decibels.add("60");
-//        decibels.add("70");
-//        decibels.add("85");
-//        decibels.add("105");
-//        decibels.add("35");
+        ArrayList<String> decibels = new ArrayList<>();//(ArrayList<String>) getIntent().getSerializableExtra("testDecibels");
+        decibels.add("35");
+        decibels.add("30");
+        decibels.add("45");
+        decibels.add("60");
+        decibels.add("70");
+        decibels.add("85");
+        decibels.add("105");
+        decibels.add("55");
 
 
         results.setFrequencies(frequencies);
         results.setDecibels(decibels);
         results.sortedPoints();
 
-        DataPoint dataPoints[] = results.sortedPoints();
+        DataPoint[] dataPoints = results.sortedPoints();
 
         GraphView graph = findViewById(R.id.graph);
         //LineGraphSeries<DataPoint> series = new LineGraphSeries<>(dataPoints);
@@ -94,6 +92,8 @@ public class GraphActivity extends AppCompatActivity {
 
         GridLabelRenderer YLabel = graph.getGridLabelRenderer();
         YLabel.setVerticalAxisTitle("Volume (dB)");
+
+        XLabel.setNumHorizontalLabels(dataPoints.length);
 
         //graph.setPadding(32,16,32,16);
 }
