@@ -35,7 +35,12 @@ public class QueryTest extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_query_test);
 
-        DatabaseReference database = FirebaseDatabase.getInstance().getReference("/server/saving-data/fireblog/Tests/Drew Lundgren (Jul 6, 2018 11:24:26 PM)/");
+        Bundle data = getIntent().getExtras();
+        User CurrentUser = data.getParcelable("user");
+        String user = CurrentUser.getUsername();
+        Intent intent = new Intent(this, TestActivity.class);
+
+        DatabaseReference database = FirebaseDatabase.getInstance().getReference("/server/saving-data/fireblog/Tests/" + CurrentUser.getUsername() + "/");
         mUserList = (ListView) findViewById(R.id.listView);
 
         final ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, mResults);

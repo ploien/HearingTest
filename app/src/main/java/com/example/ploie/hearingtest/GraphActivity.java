@@ -96,6 +96,7 @@ public class GraphActivity extends AppCompatActivity {
         labels.setVerticalAxisTitle("Volume (dB)");
 
         labels.setNumHorizontalLabels(dataPoints.length);
+        labels.setPadding(64);
 
 
 

@@ -132,6 +132,7 @@ public class TestActivity extends AppCompatActivity {
 
 
     public void saveResults(View view){
+        testComplete = true;
         Bundle data = getIntent().getExtras();
         User CurrentUser = data.getParcelable("user");
         if (CurrentUser.getUsername() == "Drew Lundgren"
@@ -144,18 +145,30 @@ public class TestActivity extends AppCompatActivity {
             if (finalResults == null) {
                 finalResults = new TestResults();
                 ArrayList<String> dummy = new ArrayList<>();
-                dummy.add("1");
-                dummy.add("2");
-                dummy.add("3");
-                dummy.add("4");
-                dummy.add("5");
-                finalResults.setFrequencies(dummy);
+                dummy.add("30");
+                dummy.add("35");
+                dummy.add("40");
+                dummy.add("45");
+                dummy.add("50");
+                dummy.add("45");
+                dummy.add("40");
+                dummy.add("35");
                 finalResults.setDecibels(dummy);
+                ArrayList<String> dummy2 = new ArrayList<>();
+                dummy2.add("1000");
+                dummy2.add("2000");
+                dummy2.add("4000");
+                dummy2.add("8000");
+                dummy2.add("1000");
+                dummy2.add("500");
+                dummy2.add("250");
+                dummy2.add("125");
+                finalResults.setFrequencies(dummy2);
                 finalResults.setParticpant_name("Demo Screening");
             }
-
-
-            finalResults.setParticpant_name(CurrentUser.getname());
+            else {
+                finalResults.setParticpant_name(CurrentUser.getname());
+            }
 
             FirebaseDatabase database = FirebaseDatabase.getInstance();
             DatabaseReference reference = database.getReference("server/saving-data/fireblog/");
@@ -166,16 +179,15 @@ public class TestActivity extends AppCompatActivity {
 
             usersRef.setValue(users);
 
-            DatabaseReference resultsRef = reference.child("Tests" + "/" + CurrentUser.getUsername()
-                    + " (" + DateFormat.getDateTimeInstance().format(new Date()) + ")");
+            DatabaseReference resultsRef = reference.child("Tests" + "/" + CurrentUser.getUsername()); // + " (" + DateFormat.getDateTimeInstance().format(new Date()) + ")");
             // Since we are storing test data this way, we will have to query it with a command kind of like this:
             // yourRef.orderByKey().startAt("abc").endAt("abc\uf8ff") in order to do a partial key query.
             Map<String, TestResults> results = new HashMap();
             results.put("Test", finalResults);
-           // resultsRef.setValue(results);
+            resultsRef.setValue(results);
 
             DatabaseReference dummy = FirebaseDatabase.getInstance().getReference("server/saving-data/fireblog/Tests/");
-            dummy.child(CurrentUser.getUsername() + ": " + finalResults.getParticipant_name()).setValue(finalResults.getParticipant_name() + " (some results)");
+            //dummy.child(CurrentUser.getUsername() + ": " + finalResults.getParticipant_name()).setValue(finalResults.getParticipant_name() + " (some results)");
             displayResults();
         }
     }

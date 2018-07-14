@@ -102,6 +102,8 @@ public class MainActivity extends AppCompatActivity {
 
     public void queryTest(View view) {
         Intent intent = new Intent(this, QueryTest.class);
+        CurrentUser = new User(User.getDisplayName(), "Name");
+        intent.putExtra("user", CurrentUser);
         startActivity(intent);
     }
 
