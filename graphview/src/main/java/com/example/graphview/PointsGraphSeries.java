@@ -24,6 +24,7 @@ import android.graphics.Point;
 
 import com.example.graphview.GraphView;
 
+import java.util.ArrayList;
 import java.util.Iterator;
 
 /**
@@ -52,6 +53,12 @@ public class PointsGraphSeries<E extends DataPointInterface> extends BaseSeries<
          * @param dataPoint the related data point
          */
         void draw(Canvas canvas, Paint paint, float x, float y, DataPointInterface dataPoint);
+    }
+
+    private ArrayList<Double> stepValues = new ArrayList<>();
+
+    public ArrayList<Double> getStepValues() {
+        return stepValues;
     }
 
     /**
@@ -186,7 +193,8 @@ public class PointsGraphSeries<E extends DataPointInterface> extends BaseSeries<
         int i = 0;
         double previousValue = 0;
         //int valX = 0;
-        double valX = (diffX/getmData().size())/2;
+        double valX = (diffX/getmData().size())/1.2;
+
         while (values.hasNext()) {
 
 
@@ -275,10 +283,14 @@ public class PointsGraphSeries<E extends DataPointInterface> extends BaseSeries<
 
             valX += diffX / getmData().size();
 
+            stepValues.add(valX);
+
             previousValue = value.getX();
         }
 
     }
+
+
 
     /**
      * helper to draw triangle

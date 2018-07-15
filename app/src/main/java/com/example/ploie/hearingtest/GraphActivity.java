@@ -9,6 +9,7 @@ import com.example.graphview.DataPoint;
 import com.example.graphview.GraphView;
 import com.example.graphview.GridLabelRenderer;
 import com.example.graphview.PointsGraphSeries;
+import com.example.graphview.StaticLabelsFormatter;
 
 
 import java.util.ArrayList;
@@ -72,6 +73,17 @@ public class GraphActivity extends AppCompatActivity {
         //LineGraphSeries<DataPoint> series = new LineGraphSeries<>(dataPoints);
         //graph.addSeries(series);
 
+        String[] horizontalLabels = new String[dataPoints.length];
+
+        for (int i = 0; i < dataPoints.length; i++) {
+            horizontalLabels[i] = Double.toString(dataPoints[i].getX());
+
+        }
+
+
+        GridLabelRenderer labels = graph.getGridLabelRenderer();
+        StaticLabelsFormatter labelsFormatter = new StaticLabelsFormatter(graph);
+
         graph.getViewport().setMinX(0);
         graph.getViewport().setMaxX(8000);
 
@@ -89,7 +101,9 @@ public class GraphActivity extends AppCompatActivity {
 
         graph.setTitle("Test Results");
 
-        GridLabelRenderer labels = graph.getGridLabelRenderer();
+        labelsFormatter.setHorizontalLabels(horizontalLabels);
+        labels.setNumHorizontalLabels(horizontalLabels.length);
+        labels.setLabelFormatter(labelsFormatter);;
         labels.setPadding(48);
         labels.setTextSize(36);
         labels.setHorizontalAxisTitle("Frequency (Hz)");
@@ -97,6 +111,11 @@ public class GraphActivity extends AppCompatActivity {
 
         labels.setNumHorizontalLabels(dataPoints.length);
         labels.setPadding(64);
+
+
+
+
+
 
 
 
