@@ -14,8 +14,8 @@
 
         <com.example.graphview.GraphView
             android:id="@+id/graph"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_width="584dp"
+            android:layout_height="303dp"
             android:layout_marginBottom="8dp"
             android:layout_marginEnd="8dp"
             android:layout_marginStart="8dp"

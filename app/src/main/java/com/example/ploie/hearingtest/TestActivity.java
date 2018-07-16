@@ -3,6 +3,7 @@ package com.example.ploie.hearingtest;
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.animation.ValueAnimator;
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.os.Handler;
@@ -239,7 +240,7 @@ public class TestActivity extends AppCompatActivity {
         //yesButton.setEnabled(false);
         //noButton.setEnabled(false);
 
-        double frequencies[] = {1000, 2000, 4000, 8000, 1000, 500, 250, 125};
+        ArrayList<Double> frequencies = new ArrayList<>(Arrays.asList(1000.0, 2000.0, 4000.0, 8000.0, 1000.0, 500.0, 250.0, 125.0));
         TestResults results = new TestResults();
         ArrayList<String> decibels = new ArrayList<>();
         ArrayList<String> testedFrequencies = new ArrayList<>();
@@ -250,6 +251,7 @@ public class TestActivity extends AppCompatActivity {
 
             int lowestYesVolume = 0;
             runOnUiThread(new Runnable() {
+                @SuppressLint("SetTextI18n")
                 @Override
                 public void run() {
                     {
@@ -277,6 +279,7 @@ public class TestActivity extends AppCompatActivity {
                 final String currentDecibel = Integer.toString(play.getDecibel());
 
                 runOnUiThread(new Runnable() {
+                    @SuppressLint("SetTextI18n")
                     @Override
                     public void run() {
                         {

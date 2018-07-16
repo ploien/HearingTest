@@ -1,7 +1,6 @@
 package com.example.ploie.hearingtest;
 
 import android.content.pm.ActivityInfo;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 
@@ -43,6 +42,7 @@ public class GraphActivity extends AppCompatActivity {
         TestResults results = new TestResults();
 
         ArrayList<String> frequencies = new ArrayList<>();//(ArrayList<String>) getIntent().getSerializableExtra("testFrequencies");
+        //dummy values for testing
         frequencies.add("1000");
         frequencies.add("250");
         frequencies.add("125");
@@ -52,20 +52,22 @@ public class GraphActivity extends AppCompatActivity {
         frequencies.add("500");
         frequencies.add("1000");
 
+
         ArrayList<String> decibels = new ArrayList<>();//(ArrayList<String>) getIntent().getSerializableExtra("testDecibels");
-        decibels.add("35");
+        //Dummy values
+        decibels.add("80");
         decibels.add("30");
         decibels.add("45");
         decibels.add("60");
-        decibels.add("70");
+        decibels.add("125");
         decibels.add("85");
         decibels.add("105");
         decibels.add("55");
 
 
+
         results.setFrequencies(frequencies);
         results.setDecibels(decibels);
-        results.sortedPoints();
 
         DataPoint[] dataPoints = results.sortedPoints();
 
@@ -76,19 +78,31 @@ public class GraphActivity extends AppCompatActivity {
         String[] horizontalLabels = new String[dataPoints.length];
 
         for (int i = 0; i < dataPoints.length; i++) {
-            horizontalLabels[i] = Double.toString(dataPoints[i].getX());
+            Double d = dataPoints[i].getX();
+            horizontalLabels[i] = Integer.toString(d.intValue());
 
         }
 
-
         GridLabelRenderer labels = graph.getGridLabelRenderer();
         StaticLabelsFormatter labelsFormatter = new StaticLabelsFormatter(graph);
+
+        labels.setHorizontalLabelsVisible(true);
+        labelsFormatter.setHorizontalLabels(horizontalLabels);
+        labels.setHumanRounding(false);
+        labels.setLabelFormatter(labelsFormatter);
+        labels.setNumVerticalLabels(15);
+        labels.setNumHorizontalLabels(dataPoints.length);
+        labels.setPadding(64);
+        labels.setTextSize(36);
+        labels.setHorizontalAxisTitle("Frequency (Hz)");
+        labels.setVerticalAxisTitle("Volume (dB)");
+
 
         graph.getViewport().setMinX(0);
         graph.getViewport().setMaxX(8000);
 
         graph.getViewport().setMinY(-20);
-        graph.getViewport().setMaxY(125);
+        graph.getViewport().setMaxY(130);
 
 
         graph.getViewport().setYAxisBoundsManual(true);
@@ -100,20 +114,6 @@ public class GraphActivity extends AppCompatActivity {
         graph.addSeries(series3);
 
         graph.setTitle("Test Results");
-
-        labelsFormatter.setHorizontalLabels(horizontalLabels);
-        labels.setNumHorizontalLabels(horizontalLabels.length);
-        labels.setLabelFormatter(labelsFormatter);;
-        labels.setPadding(48);
-        labels.setTextSize(36);
-        labels.setHorizontalAxisTitle("Frequency (Hz)");
-        labels.setVerticalAxisTitle("Volume (dB)");
-
-        labels.setNumHorizontalLabels(dataPoints.length);
-        labels.setPadding(64);
-
-
-
 
 
 

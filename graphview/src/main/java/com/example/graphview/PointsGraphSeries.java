@@ -191,9 +191,9 @@ public class PointsGraphSeries<E extends DataPointInterface> extends BaseSeries<
         lastEndX = 0;
         float firstX = 0;
         int i = 0;
-        double previousValue = 0;
         //int valX = 0;
-        double valX = (diffX/getmData().size())/1.2;
+        double valX = diffX / getmData().size();
+        //double valX = 0;
 
         while (values.hasNext()) {
 
@@ -230,10 +230,6 @@ public class PointsGraphSeries<E extends DataPointInterface> extends BaseSeries<
 
             double orgX = x;
             double orgY = y;
-
-            if (value.getX() == previousValue) {
-                valX -= diffX / getmData().size();
-            }
 
             // overdraw
             boolean overdraw = false;
@@ -277,7 +273,8 @@ public class PointsGraphSeries<E extends DataPointInterface> extends BaseSeries<
             mPaint.setColor(Color.BLACK);
             mPaint.setTextSize(32);
             mPaint.setFakeBoldText(true);
-            canvas.drawText(Double.toString(value.getY()) + " dB", endX - 15, (endY - 25), mPaint);
+            Double d = value.getY();
+            canvas.drawText(Integer.toString(d.intValue()) + " dB", endX - 40, (endY - 25), mPaint);
 
             i++;
 
@@ -285,7 +282,6 @@ public class PointsGraphSeries<E extends DataPointInterface> extends BaseSeries<
 
             stepValues.add(valX);
 
-            previousValue = value.getX();
         }
 
     }

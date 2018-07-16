@@ -62,6 +62,10 @@ public class StaticLabelsFormatter implements LabelFormatter {
      */
     protected final GraphView mGraphView;
 
+
+
+
+
     /**
      * creates the formatter without any static labels
      * define your static labels via {@link #setHorizontalLabels(String[])} and {@link #setVerticalLabels(String[])}
@@ -72,6 +76,9 @@ public class StaticLabelsFormatter implements LabelFormatter {
         mGraphView = graphView;
         init(null, null, null);
     }
+
+
+
 
     /**
      * creates the formatter without any static labels.
@@ -86,6 +93,9 @@ public class StaticLabelsFormatter implements LabelFormatter {
         init(null, null, dynamicLabelFormatter);
     }
 
+
+
+
     /**
      * creates the formatter with static labels defined.
      *
@@ -99,6 +109,10 @@ public class StaticLabelsFormatter implements LabelFormatter {
         mGraphView = graphView;
         init(horizontalLabels, verticalLabels, null);
     }
+
+
+
+
 
     /**
      * creates the formatter with static labels defined.
@@ -115,6 +129,10 @@ public class StaticLabelsFormatter implements LabelFormatter {
         mGraphView = graphView;
         init(horizontalLabels, verticalLabels, dynamicLabelFormatter);
     }
+
+
+
+
 
     /**
      * @param horizontalLabels  the horizontal labels, ordered form the left to the right
@@ -149,6 +167,10 @@ public class StaticLabelsFormatter implements LabelFormatter {
         adjust();
     }
 
+
+
+
+
     /**
      * @param horizontalLabels  the horizontal labels, ordered form the left to the right
      *                          if it is null, the labels will be generated via the #dynamicLabelFormatter
@@ -158,6 +180,10 @@ public class StaticLabelsFormatter implements LabelFormatter {
         adjust();
     }
 
+
+
+
+
     /**
      * @param verticalLabels    the vertical labels, ordered from bottom to the top
      *                          if it is null, the labels will be generated via the #dynamicLabelFormatter
@@ -166,6 +192,10 @@ public class StaticLabelsFormatter implements LabelFormatter {
         this.mVerticalLabels = verticalLabels;
         adjust();
     }
+
+
+
+
 
     /**
      *
@@ -195,6 +225,10 @@ public class StaticLabelsFormatter implements LabelFormatter {
         }
     }
 
+
+
+
+
     /**
      * @param viewport the used viewport
      */
@@ -203,6 +237,10 @@ public class StaticLabelsFormatter implements LabelFormatter {
         mViewport = viewport;
         adjust();
     }
+
+
+
+
 
     /**
      * adjusts the number of vertical/horizontal labels

@@ -353,7 +353,7 @@ public class GridLabelRenderer {
         mStyles = new Styles();
         resetStyles();
         mNumVerticalLabels = 5;
-        mNumHorizontalLabels = 5;
+        //mNumHorizontalLabels = 5;
         mHumanRoundingX = true;
         mHumanRoundingY = true;
     }
@@ -720,7 +720,7 @@ public class GridLabelRenderer {
         double exactSteps;
 
         // split range into equal steps
-        exactSteps = (maxY - minY) / (numVerticalLabels - 1);
+        exactSteps = (maxY - minY) / (numVerticalLabels );
 
         // round because of floating error
         exactSteps = Math.round(exactSteps * 1000000d) / 1000000d;
@@ -859,7 +859,7 @@ public class GridLabelRenderer {
         double exactSteps;
 
         // split range into equal steps
-        exactSteps = (maxX - minX) / (numHorizontalLabels - 1);
+        exactSteps = (maxX - minX) / (numHorizontalLabels);
 
         // round because of floating error
         exactSteps = Math.round(exactSteps * 1000000d) / 1000000d;
@@ -869,6 +869,7 @@ public class GridLabelRenderer {
             exactSteps = 0.0000001d;
             maxX = minX + exactSteps * (numHorizontalLabels - 1);
         }
+
 
         // human rounding to have nice numbers (1, 2, 5, ...)
         if (isHumanRoundingX()) {
@@ -941,7 +942,7 @@ public class GridLabelRenderer {
         }
 
         // it can happen that we need to add some more labels to fill the complete screen
-        numHorizontalLabels = (int) ((mGraphView.getViewport().mCurrentViewport.width() / exactSteps)) + 1;
+        numHorizontalLabels = (int) ((mGraphView.getViewport().mCurrentViewport.width() / exactSteps)) + 2;
 
         if (mStepsHorizontal != null) {
             mStepsHorizontal.clear();
@@ -953,14 +954,14 @@ public class GridLabelRenderer {
         // convert data-x to pixel-x in current viewport
         double pixelPerData = width / mGraphView.getViewport().mCurrentViewport.width();
 
-        for (int i = 0; i < numHorizontalLabels; i++) {
+        for (int i = 1; i < numHorizontalLabels ; i++) {
             // dont draw if it is left of visible screen
             if (newMinX + (i * exactSteps) < mGraphView.getViewport().mCurrentViewport.left) {
                 continue;
             }
 
             // where is the data point on the current screen
-            double dataPointPos = newMinX + (i * exactSteps);
+            double dataPointPos = count + ((i) * exactSteps);
             double relativeToCurrentViewport = dataPointPos - mGraphView.getViewport().mCurrentViewport.left;
 
             double pixelPos = relativeToCurrentViewport * pixelPerData;
