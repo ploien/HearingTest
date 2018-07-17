@@ -13,4 +13,9 @@
     <string name="empty" />
     <string name="test_query">Test Query</string>
     <string name="queryTest">Test Query</string>
+    <string name="button_view_results">View Results</string>
+    <string name="button_delete_test">Delete Test</string>
+    <string name="text_tests">Tests Performed</string>
+    <string name="view_test_info" />
+    <string name="view_test_info1">Test Information</string>
 </resources>

@@ -180,15 +180,12 @@ public class TestActivity extends AppCompatActivity {
 
             usersRef.setValue(users);
 
-            DatabaseReference resultsRef = reference.child("Tests" + "/" + CurrentUser.getUsername()); // + " (" + DateFormat.getDateTimeInstance().format(new Date()) + ")");
-            // Since we are storing test data this way, we will have to query it with a command kind of like this:
-            // yourRef.orderByKey().startAt("abc").endAt("abc\uf8ff") in order to do a partial key query.
+            DatabaseReference resultsRef = reference.child("Tests" + "/" + CurrentUser.getUsername() + " (" + DateFormat.getDateTimeInstance().format(new Date()) + ")");
+
             Map<String, TestResults> results = new HashMap();
             results.put("Test", finalResults);
             resultsRef.setValue(results);
-
-            DatabaseReference dummy = FirebaseDatabase.getInstance().getReference("server/saving-data/fireblog/Tests/");
-            //dummy.child(CurrentUser.getUsername() + ": " + finalResults.getParticipant_name()).setValue(finalResults.getParticipant_name() + " (some results)");
+            
             displayResults();
         }
     }

@@ -42,7 +42,7 @@ public class GraphActivity extends AppCompatActivity {
         TestResults results = new TestResults();
 
         ArrayList<String> frequencies = new ArrayList<>();//(ArrayList<String>) getIntent().getSerializableExtra("testFrequencies");
-        //dummy values for testing
+//        //dummy values for testing
         frequencies.add("1000");
         frequencies.add("250");
         frequencies.add("125");
@@ -54,7 +54,7 @@ public class GraphActivity extends AppCompatActivity {
 
 
         ArrayList<String> decibels = new ArrayList<>();//(ArrayList<String>) getIntent().getSerializableExtra("testDecibels");
-        //Dummy values
+//        //Dummy values
         decibels.add("80");
         decibels.add("30");
         decibels.add("45");
