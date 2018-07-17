@@ -11,7 +11,7 @@
         android:id="@+id/newTest"
         android:layout_width="wrap_content"
         android:layout_height="53dp"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="36dp"
         android:onClick="newTest"
         android:text="@string/New_Test"
         app:layout_constraintEnd_toStartOf="@+id/queryTest"
@@ -23,11 +23,27 @@
         android:id="@+id/queryTest"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="36dp"
         android:onClick="queryTest"
         android:text="@string/queryTest"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toEndOf="@+id/newTest"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="381dp"
+        android:layout_height="416dp"
+        android:layout_marginBottom="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:scrollbars = "vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="1.0" />
+
 </android.support.constraint.ConstraintLayout>

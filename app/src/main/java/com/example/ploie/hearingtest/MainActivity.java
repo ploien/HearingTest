@@ -5,6 +5,8 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.ActivityInfo;
+import android.graphics.Color;
+import android.graphics.Typeface;
 import android.media.AudioFormat;
 import android.media.AudioManager;
 import android.media.AudioTrack;
@@ -13,8 +15,10 @@ import android.os.Looper;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.method.ScrollingMovementMethod;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.firebase.ui.auth.AuthUI;
@@ -40,12 +44,12 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         setContentView(R.layout.activity_main);
-        SharedPreferences sharedPref = this.getPreferences(Context.MODE_PRIVATE);
-        CURRENT_USER = sharedPref.getString(getString(R.string.current_user), CURRENT_USER);
-        Toast.makeText(this, CURRENT_USER,
-                Toast.LENGTH_LONG).show();
-
         instantiateUser();
+        TextView text = findViewById(R.id.textView2);
+        text.setMovementMethod(new ScrollingMovementMethod());
+        text.setTypeface(null, Typeface.BOLD);
+        text.setTextColor(Color.BLACK);
+        text.setText("Disclaimer:\nThis test is not intended to replace professional help and may not be 100% accurate. ");
 
     }
 
