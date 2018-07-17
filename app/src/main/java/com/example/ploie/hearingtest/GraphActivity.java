@@ -1,8 +1,10 @@
 package com.example.ploie.hearingtest;
 
+import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.view.View;
 
 import com.example.graphview.DataPoint;
 import com.example.graphview.GraphView;
@@ -22,8 +24,14 @@ public class GraphActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
         setContentView(R.layout.activity_graph);
+        setTitle("Test Results");
 
         createGraph();
+    }
+
+    public void viewLegendButton(View view) {
+        Intent intent = new Intent(this, GraphLegendActivity.class);
+        startActivity(intent);
     }
 
     private void createGraph() {
@@ -41,8 +49,9 @@ public class GraphActivity extends AppCompatActivity {
 
         TestResults results = new TestResults();
 
-        ArrayList<String> frequencies = new ArrayList<>();//(ArrayList<String>) getIntent().getSerializableExtra("testFrequencies");
-//        //dummy values for testing
+        ArrayList<String> frequencies = new ArrayList<>(); //(ArrayList<String>) getIntent().getSerializableExtra("testFrequencies");
+        // dummy values for testing
+
         frequencies.add("1000");
         frequencies.add("250");
         frequencies.add("125");
@@ -53,8 +62,10 @@ public class GraphActivity extends AppCompatActivity {
         frequencies.add("1000");
 
 
+
         ArrayList<String> decibels = new ArrayList<>();//(ArrayList<String>) getIntent().getSerializableExtra("testDecibels");
-//        //Dummy values
+        //Dummy values
+
         decibels.add("80");
         decibels.add("30");
         decibels.add("45");

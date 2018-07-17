@@ -20,7 +20,8 @@
         <activity android:name=".UserMenuActivity" />
         <activity android:name=".GraphActivity" />
         <activity android:name=".PreTestActivity" />
-        <activity android:name=".QueryTest"></activity>
+        <activity android:name=".QueryTest" />
+        <activity android:name=".GraphLegendActivity" />
     </application>
 
 </manifest>

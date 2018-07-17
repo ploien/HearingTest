@@ -206,21 +206,24 @@ public class PointsGraphSeries<E extends DataPointInterface> extends BaseSeries<
             double ratY = valY / diffY;
             double y = graphHeight * ratY;
 
-            if (yVal < 25) {
+            //Set point to a particular color depending on the severity of the hearing loss
+            if (yVal <= 15) {
                 mPaint.setColor(Color.GREEN);
-            } else if ((yVal <= 40) && (yVal > 25)) {
+            } else if ((yVal <= 25) && (yVal > 15)) {
                 //Yellow
                 selectedColor = Color.rgb(244, 226, 66);
                 mPaint.setColor(selectedColor);
-            } else if ((yVal <= 55) && (yVal > 40)) {
+            } else if ((yVal <= 40) && (yVal > 25)) {
                 //orange
                 selectedColor = Color.rgb(255, 165, 0);
                 mPaint.setColor(selectedColor);
-            } else if ((yVal <= 70) && (yVal > 55)) {
+            } else if ((yVal <= 55) && (yVal > 40)) {
                 mPaint.setColor(Color.RED);
-            } else if ((yVal <= 90) && (yVal > 70)) {
+            } else if ((yVal <= 70) && (yVal > 55)) {
                 mPaint.setColor(Color.MAGENTA);
-            } else if ((yVal > 90)){
+            } else if ((yVal <= 90) && (yVal > 70)){
+                mPaint.setColor(Color.GRAY);
+            } else {
                 mPaint.setColor(Color.BLACK);
             }
 

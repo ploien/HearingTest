@@ -21,9 +21,9 @@ public class PlaySound extends Activity {
     private final double sample[] = new double[numSamples];
     private double freqOfTone = 1000; // hz
     private static final double MAX_AMPLITUDE = 32768;
-    private double volume = (MAX_AMPLITUDE/Math.pow(Math.sqrt(10),7));
-    private double increase = Math.sqrt(5); //1638.4
-    private double decrease = Math.sqrt(10); //3276.8 is what we actually want
+    private double volume = (MAX_AMPLITUDE/Math.pow(Math.sqrt(10),7)); //30 decibels
+    private double increase = Math.pow(Math.sqrt(10), (.5)); //increase by 5 decibels
+    private double decrease = Math.sqrt(10); //Decrease by 10 decibels
     private int decibel = 30;
     private final String TAG = "PlaySound";
 

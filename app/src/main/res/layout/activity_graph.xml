@@ -7,15 +7,25 @@
     tools:context=".GraphActivity">
 
 
+
     <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="horizontal">
+        android:layout_margin="8dp"
+        android:layout_marginBottom="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:orientation="horizontal"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
         <com.example.graphview.GraphView
             android:id="@+id/graph"
-            android:layout_width="584dp"
-            android:layout_height="303dp"
+            android:layout_width="491dp"
+            android:layout_height="274dp"
             android:layout_marginBottom="8dp"
             android:layout_marginEnd="8dp"
             android:layout_marginStart="8dp"
@@ -27,5 +37,16 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="0.333" />
-        </RelativeLayout>
+
+        <Button
+            android:id="@+id/button2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_marginStart="-8dp"
+            android:layout_marginTop="48dp"
+            android:layout_toEndOf="@+id/graph"
+            android:onClick="viewLegendButton"
+            android:text="@string/view_legend" />
+    </RelativeLayout>
 </android.support.constraint.ConstraintLayout>

@@ -132,6 +132,7 @@ public class TestActivity extends AppCompatActivity {
     }
 
 
+
     public void saveResults(View view){
         testComplete = true;
         Bundle data = getIntent().getExtras();
@@ -237,7 +238,7 @@ public class TestActivity extends AppCompatActivity {
         //yesButton.setEnabled(false);
         //noButton.setEnabled(false);
 
-        ArrayList<Double> frequencies = new ArrayList<>(Arrays.asList(1000.0, 2000.0, 4000.0, 8000.0, 1000.0, 500.0, 250.0, 125.0));
+        final ArrayList<Double> frequencies = new ArrayList<>(Arrays.asList(1000.0, 2000.0, 4000.0, 8000.0, 1000.0, 500.0, 250.0, 125.0));
         TestResults results = new TestResults();
         ArrayList<String> decibels = new ArrayList<>();
         ArrayList<String> testedFrequencies = new ArrayList<>();
@@ -387,6 +388,181 @@ public class TestActivity extends AppCompatActivity {
             //send info to json string
         }
 
+        //Add any intermediate frequencies that need to be tested to the list
+        int end = frequencies.size();
+        for (int i = 0; i < (end - 1); i++) {
+
+            //All the variable needed for the calculations
+            Double decibelDifference = Math.abs(Double.parseDouble(decibels.get(i)) - Double.parseDouble(decibels.get(i + 1)));
+            double frequencyDifference = Math.abs(frequencies.get(i) - frequencies.get(i + 1));
+            double middleFrequency = 0;
+
+            if (i < 3) {
+                middleFrequency = frequencies.get(i) + (frequencyDifference / 2);
+            } else if (i > 3) {
+                middleFrequency = frequencies.get(i + 1) + (frequencyDifference / 2);
+            }
+
+            //We don't want to evaluate the 8000 - 1000 interval, so we skip the 8000 Hz index,
+            //which is 2
+            if (i == 2) {
+                ++i;
+            }
+
+            //If the difference for decibels heard beetween two adjacent frequencies, add the
+            //middle frequency to be tested
+            if (decibelDifference > 20) {
+                frequencies.add(middleFrequency);
+            }
+        }
+
+        for (int i = 8; i < frequencies.size(); i++) {
+
+            Log.d(TEST_ACTIVITY, "New Frequency: " + Double.toString(frequencies.get(i)));
+
+            final int index = i;
+            int lowestYesVolume = 0;
+            runOnUiThread(new Runnable() {
+                @SuppressLint("SetTextI18n")
+                @Override
+                public void run() {
+                    {
+                        frequencyView.setText(Double.toString(frequencies.get(index)) + " Hz");
+                    }
+                }
+            });
+
+
+            play = new PlaySound();
+            play.setFrequency(frequencies.get(i));
+
+
+            boolean firstNo = false;
+            boolean yesAfterNo = false;
+            conditionsMet = false;
+
+            int yesCount = 0;
+            int noCount = 0;
+
+
+            while (!conditionsMet) {
+
+                final String currentDecibel = Integer.toString(play.getDecibel());
+
+                runOnUiThread(new Runnable() {
+                    @SuppressLint("SetTextI18n")
+                    @Override
+                    public void run() {
+                        {
+                            decibelView.setText(currentDecibel + " dB");
+                        }
+                    }
+                });
+
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        {
+
+                            ValueAnimator animator = ValueAnimator.ofInt(0, bar.getMax());
+                            animator.setDuration(2250);
+                            animator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
+                                @Override
+                                public void onAnimationUpdate(ValueAnimator animation) {
+                                    bar.setProgress((Integer) animation.getAnimatedValue());
+                                }
+                            });
+                            animator.addListener(new AnimatorListenerAdapter() {
+                                @Override
+                                public void onAnimationEnd(Animator animation) {
+                                    super.onAnimationEnd(animation);
+                                    // start your activity here
+                                }
+                            });
+                            animator.start();
+
+                        }
+                    }
+                });
+
+
+                // Play the sound here, simulated by Thread sleeping
+                play.genTone();
+                play.playSound();
+
+
+                //yesButton.setEnabled(true);
+                //noButton.setEnabled(true);
+                waitForThread(); // Current placeholder for test is waiting
+
+
+                if (yesClicked) {
+                    // do yes conditions (lower volume or tally result)
+                    yesClicked = false;
+
+                    //Conditions after we hear no the first time
+                    if (firstNo && (!yesAfterNo)) {
+                        yesAfterNo = true;
+                        lowestYesVolume = play.getDecibel();
+                        ++yesCount;
+                        //After getting our first yes when increasing in volume
+                    } else if (firstNo) {
+                        ++yesCount;
+                        if (lowestYesVolume > play.getDecibel()) {
+                            lowestYesVolume = play.getDecibel();
+                            yesCount = 1;
+                            noCount = 0;
+                        }
+                    }
+                    play.decreaseVolume();
+                    try {
+                        Thread.sleep(1000);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+
+                } else if (noClicked) {
+                    // increase volume, reset tally results
+                    noClicked = false;
+
+                    //Conditions after we hear no the first time
+                    if (!firstNo) {
+                        firstNo = true;
+                        //start going back up after hearing no for the first time
+                    } else if (lowestYesVolume == play.getDecibel()) {
+                        ++noCount;
+                    }
+
+                    play.increaseVolume();
+
+                    try {
+                        Thread.sleep(1000);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                }
+
+                //Once we've found the lowest audible volume
+                //evaluate whether they've heard it 3/5 times
+                if ((yesCount > 2)) {
+                    conditionsMet = true;
+                } else if (noCount > 2) {
+                    yesCount = 0;
+                    noCount = 0;
+                    yesAfterNo = false;
+                    play.increaseVolume();
+                }
+
+            }
+            play.increaseVolume();
+            play.increaseVolume();
+            Log.d(TEST_ACTIVITY, "Saved decibel: " + Double.toString(play.getDecibel()));
+            decibels.add(Integer.toString(play.getDecibel()));
+            testedFrequencies.add(Double.toString(frequencies.get(i)));
+            //send info to json string
+            
+        }
+
         testFrequencies = testedFrequencies;
         testDecibels = decibels;
 
@@ -395,6 +571,9 @@ public class TestActivity extends AppCompatActivity {
         finalResults = results;
         testComplete = true;
     }
+
+
+
 
 
 }
