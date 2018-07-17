@@ -64,7 +64,7 @@ public class GraphActivity extends AppCompatActivity {
 
 
 
-        ArrayList<String> decibels = (ArrayList<String>) getIntent().getSerializableExtra("testDecibels");
+        ArrayList<String> decibels = (ArrayList<String>)getIntent().getSerializableExtra("testDecibels");
         //Dummy values
         /*
         decibels.add("80");
@@ -92,7 +92,7 @@ public class GraphActivity extends AppCompatActivity {
 
         for (int i = 0; i < dataPoints.length; i++) {
             Double d = dataPoints[i].getX();
-            horizontalLabels[i] = Integer.toString(d.intValue());
+            horizontalLabels[i] = Double.toString((double)d.intValue()/1000.0);
 
         }
 
@@ -101,13 +101,13 @@ public class GraphActivity extends AppCompatActivity {
 
         labels.setHorizontalLabelsVisible(true);
         labelsFormatter.setHorizontalLabels(horizontalLabels);
+        labels.setNumHorizontalLabels(dataPoints.length);
         labels.setHumanRounding(false);
         labels.setLabelFormatter(labelsFormatter);
-        labels.setNumVerticalLabels(15);
-        labels.setNumHorizontalLabels(dataPoints.length);
+        labels.setNumVerticalLabels(7);
         labels.setPadding(64);
         labels.setTextSize(36);
-        labels.setHorizontalAxisTitle("Frequency (Hz)");
+        labels.setHorizontalAxisTitle("Frequency (kHz)");
         labels.setVerticalAxisTitle("Volume (dB)");
 
 
@@ -115,7 +115,7 @@ public class GraphActivity extends AppCompatActivity {
         graph.getViewport().setMaxX(8000);
 
         graph.getViewport().setMinY(-20);
-        graph.getViewport().setMaxY(130);
+        graph.getViewport().setMaxY(120);
 
 
         graph.getViewport().setYAxisBoundsManual(true);

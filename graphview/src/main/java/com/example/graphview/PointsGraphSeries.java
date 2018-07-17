@@ -277,7 +277,7 @@ public class PointsGraphSeries<E extends DataPointInterface> extends BaseSeries<
             mPaint.setTextSize(32);
             mPaint.setFakeBoldText(true);
             Double d = value.getY();
-            canvas.drawText(Integer.toString(d.intValue()) + " dB", endX - 40, (endY - 25), mPaint);
+            canvas.drawText(Integer.toString(d.intValue()) + " dB", endX - 60, (endY - 25), mPaint);
 
             i++;
 

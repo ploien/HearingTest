@@ -70,29 +70,29 @@ public class TestResults {
 
         //Get rid of lower result of the two 1000 hZ tests
         //First 1000 is at index 0 and 4
+
         int firstIndex = 0;
         int secondIndex = 4;
         int value = 0;
-        boolean isGreater = Double.parseDouble(decibels.get(firstIndex)) > Double.parseDouble(decibels.get(secondIndex));
+        boolean isGreater = Double.parseDouble(decibels.get(firstIndex)) >= Double.parseDouble(decibels.get(secondIndex));
 
         //Variable for switch statement.
+        //TODO: Make it work
+        /*
         if (isGreater) {
             value = 1;
         }
 
 
         //Case 1, the value at the first index is greater, case 0, the value at secondIndex is greater.
-        switch (value) {
-            case 1:
-               frequencies.remove(secondIndex);
-               decibels.remove(secondIndex);
-               break;
-            case 0:
+        if (value == 1) {
+            frequencies.remove(secondIndex);
+            decibels.remove(secondIndex);
+        } else if (value == 0){
                 frequencies.remove(firstIndex);
                 decibels.remove(firstIndex);
-                break;
-
         }
+        */
 
 
 
@@ -106,6 +106,7 @@ public class TestResults {
                 dataPoints[i] = p;
         }
 
+
         //BubbleSort DataPoints in ascending order by decibel level.
         int n = dataPoints.length;
         for (int i = 0; i < n-1; i++)
@@ -118,6 +119,7 @@ public class TestResults {
                     dataPoints[j+1] = temp;
 
                 }
+
 
         return dataPoints;
     }

@@ -954,7 +954,7 @@ public class GridLabelRenderer {
         // convert data-x to pixel-x in current viewport
         double pixelPerData = width / mGraphView.getViewport().mCurrentViewport.width();
 
-        for (int i = 1; i < numHorizontalLabels ; i++) {
+        for (int i = 1; i < numHorizontalLabels  ; i++) {
             // dont draw if it is left of visible screen
             if (newMinX + (i * exactSteps) < mGraphView.getViewport().mCurrentViewport.left) {
                 continue;
@@ -1144,7 +1144,7 @@ public class GridLabelRenderer {
             mPaintAxisTitle.setColor(getHorizontalAxisTitleColor());
             mPaintAxisTitle.setTextSize(getHorizontalAxisTitleTextSize());
             float x = canvas.getWidth() / 2;
-            float y = canvas.getHeight() - mStyles.padding;
+            float y = canvas.getHeight() - (mStyles.padding/2);
             canvas.drawText(mHorizontalAxisTitle, x, y, mPaintAxisTitle);
         }
     }
@@ -1227,10 +1227,10 @@ public class GridLabelRenderer {
                     }
                 } else {
                     mPaintLabel.setTextAlign(Paint.Align.CENTER);
-                    if (i == mStepsHorizontal.size() - 1)
+                    if (i == mStepsHorizontal.size()-2)
                         mPaintLabel.setTextAlign(Paint.Align.RIGHT);
                     if (i == 0)
-                        mPaintLabel.setTextAlign(Paint.Align.LEFT);
+                        mPaintLabel.setTextAlign(Paint.Align.CENTER);
                 }
 
                 // multiline labels
