@@ -52,6 +52,7 @@ public class GraphActivity extends AppCompatActivity {
         TestResults results = new TestResults();
 
         ArrayList<String> frequencies =  (ArrayList<String>) getIntent().getSerializableExtra("testFrequencies");
+
         // dummy values for testing
         /*
         frequencies.add("1000");
@@ -67,6 +68,7 @@ public class GraphActivity extends AppCompatActivity {
 
 
         ArrayList<String> decibels = (ArrayList<String>)getIntent().getSerializableExtra("testDecibels");
+
         //Dummy values
         /*
         decibels.add("80");
@@ -87,21 +89,25 @@ public class GraphActivity extends AppCompatActivity {
         DataPoint[] dataPoints = results.sortedPoints();
 
         GraphView graph = findViewById(R.id.graph);
-        LineGraphSeries<DataPoint> series = new LineGraphSeries<>(dataPoints);
-        graph.addSeries(series);
-        series.setColor(Color.DKGRAY);
 
+        //Set as many x-axis labels as there are points on the graph
         String[] horizontalLabels = new String[dataPoints.length];
 
+
+        //Set label for each corresponding x-value
         for (int i = 0; i < dataPoints.length; i++) {
+
             Double d = dataPoints[i].getX();
+
+            //value is divided by 1000 to display kHz, X-Values are in Hz
             horizontalLabels[i] = Double.toString((double)d.intValue()/1000.0);
 
         }
 
+        //format and display labels to desired specifications
+
         GridLabelRenderer labels = graph.getGridLabelRenderer();
         StaticLabelsFormatter labelsFormatter = new StaticLabelsFormatter(graph);
-
         labels.setHorizontalLabelsVisible(true);
         labelsFormatter.setHorizontalLabels(horizontalLabels);
         labels.setNumHorizontalLabels(dataPoints.length);
@@ -113,7 +119,7 @@ public class GraphActivity extends AppCompatActivity {
         labels.setHorizontalAxisTitle("Frequency (kHz)");
         labels.setVerticalAxisTitle("Volume (dB)");
 
-
+        //these bounds should not need to be changed.
         graph.getViewport().setMinX(0);
         graph.getViewport().setMaxX(8000);
 
@@ -124,7 +130,12 @@ public class GraphActivity extends AppCompatActivity {
         graph.getViewport().setYAxisBoundsManual(true);
         graph.getViewport().setXAxisBoundsManual(true);
 
+        //adds a line-graph to the graphView
+        LineGraphSeries<DataPoint> series = new LineGraphSeries<>(dataPoints);
+        graph.addSeries(series);
+        series.setColor(Color.DKGRAY);
 
+        //adds a point-graph to the graphView
         PointsGraphSeries<DataPoint> series3 = new PointsGraphSeries<>(dataPoints);
         series3.setShape(PointsGraphSeries.Shape.TRIANGLE);
         graph.addSeries(series3);

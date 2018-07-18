@@ -1,10 +1,12 @@
 package com.example.ploie.hearingtest;
 
-import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
+/**
+ * Creates a legend for the graph to help interpret the test results.
+ */
 public class GraphLegendActivity extends AppCompatActivity {
 
     @Override

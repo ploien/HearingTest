@@ -276,6 +276,7 @@ public class PointsGraphSeries<E extends DataPointInterface> extends BaseSeries<
 
             i++;
 
+            //Draws even intervals regardless of actual x value
             valX += diffX / getmData().size();
 
             stepValues.add(valX);

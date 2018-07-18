@@ -40,18 +40,18 @@ public class TestActivity extends AppCompatActivity {
      */
     public static boolean monitorState = false;
 
+    //Booleans used in the testing logic
     private boolean testComplete = false;
-    private TestResults finalResults = null;
     private boolean yesClicked = false;
     private boolean noClicked = false;
+
+
+    private TestResults finalResults = null;
     final static String TEST_ACTIVITY = "TestActivity";
     public ArrayList<String> testFrequencies = null;
     public ArrayList<String> testDecibels = null;
     public TextView instructions = null;
 
-    //Button yesButton = (Button) findViewById(R.id.yesButton);
-    //Button noButton = (Button) findViewById(R.id.noButton);
-    //Button startButton = (Button) findViewById(R.id.button3);
 
     @Override
     /**
@@ -63,6 +63,7 @@ public class TestActivity extends AppCompatActivity {
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         setContentView(R.layout.activity_test);
         Intent intent = getIntent();
+
         instructions = findViewById(R.id.InstructionsView);
         instructions.setText(R.string.beforeStart);
 
@@ -118,8 +119,10 @@ public class TestActivity extends AppCompatActivity {
      */
     public void onStartClick(View view) {
 
-        //startButton.setEnabled(false);
+
         instructions.setText(R.string.afterStart);
+
+        //Test runds in a background thread
         final Thread thread = new Thread(new Runnable() {
             public Handler mHandler;
 
@@ -138,9 +141,10 @@ public class TestActivity extends AppCompatActivity {
      * is necessary to keep test results unique and for data querying.
      * @param view
      */
-    public void saveResults(View view){
+    public void saveResults(TestActivity view){
         Bundle data = getIntent().getExtras();
         User CurrentUser = data.getParcelable("user");
+
         if (testComplete && finalResults != null) {
 
             finalResults.setParticpant_name(CurrentUser.getname());
@@ -189,6 +193,7 @@ public class TestActivity extends AppCompatActivity {
 //     7. Since the conditions are always "Met", the testingFrequency boolean is switched to false,
 //        indicating the completion of the current frequency.
 
+    //Starts graph activity that shows the users results after completing the test.
     private void displayResults() {
         Intent intent = new Intent(this, GraphActivity.class);
         intent.putExtra("testFrequencies", testFrequencies);
@@ -197,7 +202,9 @@ public class TestActivity extends AppCompatActivity {
     }
 
 
+    //Contains all the testing logic and proccesses
     private void test() {
+
 
         final TextView frequencyView = findViewById(R.id.frequencyView);
         final TextView decibelView = findViewById(R.id.decibelView);
@@ -211,16 +218,21 @@ public class TestActivity extends AppCompatActivity {
         //yesButton.setEnabled(false);
         //noButton.setEnabled(false);
 
+        //Array of frequencies to be tested.
         final ArrayList<Double> frequencies = new ArrayList<>(Arrays.asList(1000.0, 2000.0, 4000.0, 8000.0, 1000.0, 500.0, 250.0, 125.0));
         TestResults results = new TestResults();
         ArrayList<String> decibels = new ArrayList<>();
         ArrayList<String> testedFrequencies = new ArrayList<>();
 
+        //Perform test for initial list of frequencies
         for (final double frequency : frequencies) {
 
             Log.d(TEST_ACTIVITY, "New Frequency: " + Double.toString(frequency));
 
+
             int lowestYesVolume = 0;
+
+            //display current frequency to user in UI thread
             runOnUiThread(new Runnable() {
                 @SuppressLint("SetTextI18n")
                 @Override
@@ -232,7 +244,7 @@ public class TestActivity extends AppCompatActivity {
             });
 
 
-
+            //create new playsound object & set it'sfrequency to current frequency
             play = new PlaySound();
             play.setFrequency(frequency);
 
@@ -249,6 +261,7 @@ public class TestActivity extends AppCompatActivity {
 
                 final String currentDecibel = Integer.toString(play.getDecibel());
 
+                //display the current decibel being produced to the user
                 runOnUiThread(new Runnable() {
                     @SuppressLint("SetTextI18n")
                     @Override
@@ -353,12 +366,17 @@ public class TestActivity extends AppCompatActivity {
                 }
 
             }
+
+            //Increase the volume again because it drops down 10 decibels after the final yesClick.
+            //We want the decibel that it's at before the last yes click
             play.increaseVolume();
             play.increaseVolume();
             Log.d(TEST_ACTIVITY, "Saved decibel: " + Double.toString(play.getDecibel()));
+
+            //Record testing result for the current frequency
             decibels.add(Integer.toString(play.getDecibel()));
             testedFrequencies.add(Double.toString(frequency));
-            //send info to json string
+
         }
 
         //Add any intermediate frequencies that need to be tested to the list
@@ -389,6 +407,7 @@ public class TestActivity extends AppCompatActivity {
             }
         }
 
+        //Repeat test loop for middle frequencies that were added.
         for (int i = 8; i < frequencies.size(); i++) {
 
             Log.d(TEST_ACTIVITY, "New Frequency: " + Double.toString(frequencies.get(i)));
@@ -543,6 +562,9 @@ public class TestActivity extends AppCompatActivity {
         results.setFrequencies(testedFrequencies);
         finalResults = results;
         testComplete = true;
+
+        //Save results to firebase and display graph with the results.
+        saveResults(this);
     }
 
 
