@@ -26,4 +26,6 @@
     <string name="text_tests">Tests Performed</string>
     <string name="view_test_info" />
     <string name="view_test_info1">Test Information</string>
+    <string name="disclaimer">This test is not intended to replace professional help and may not be 100% accurate.</string>
+    <string name="DisclaimerTitle">Disclaimer</string>
 </resources>

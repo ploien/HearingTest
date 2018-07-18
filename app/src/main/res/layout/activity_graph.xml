@@ -7,13 +7,11 @@
     tools:context=".GraphActivity">
 
 
-
     <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        android:layout_width="match_parent"
+        android:layout_width="585dp"
         android:layout_height="match_parent"
         android:layout_margin="8dp"
         android:layout_marginBottom="8dp"
-        android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:orientation="horizontal"
@@ -24,7 +22,7 @@
 
         <com.example.graphview.GraphView
             android:id="@+id/graph"
-            android:layout_width="491dp"
+            android:layout_width="494dp"
             android:layout_height="274dp"
             android:layout_marginBottom="8dp"
             android:layout_marginEnd="8dp"
@@ -40,10 +38,10 @@
 
         <Button
             android:id="@+id/button2"
-            android:layout_width="wrap_content"
+            android:layout_width="85dp"
             android:layout_height="wrap_content"
             android:layout_alignParentTop="true"
-            android:layout_marginStart="-8dp"
+            android:layout_marginStart="-10dp"
             android:layout_marginTop="48dp"
             android:layout_toEndOf="@+id/graph"
             android:onClick="viewLegendButton"

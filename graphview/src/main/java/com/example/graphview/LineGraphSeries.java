@@ -77,7 +77,7 @@ public class LineGraphSeries<E extends DataPointInterface> extends BaseSeries<E>
          *
          * @see #drawBackground
          */
-        private int backgroundColor = Color.argb(100, 172, 218, 255);
+        private int backgroundColor = Color.argb(100, 0, 255, 0);
     }
 
     /**
@@ -176,7 +176,7 @@ public class LineGraphSeries<E extends DataPointInterface> extends BaseSeries<E>
         mPaintBackground = new Paint();
 
         mSelectionPaint = new Paint();
-        mSelectionPaint.setColor(Color.argb(80, 0, 0, 0));
+        mSelectionPaint.setColor(Color.argb(80, 0, 255, 0));
         mSelectionPaint.setStyle(Paint.Style.FILL);
 
         mPathBackground = new Path();
@@ -258,6 +258,7 @@ public class LineGraphSeries<E extends DataPointInterface> extends BaseSeries<E>
         boolean sameXSkip = false;
         float minYOnSameX = 0f;
         float maxYOnSameX = 0f;
+        double valX = diffX / getmData().size();
 
         while (values.hasNext()) {
             E value = values.next();
@@ -267,7 +268,7 @@ public class LineGraphSeries<E extends DataPointInterface> extends BaseSeries<E>
             double y = graphHeight * ratY;
 
             double valueX = value.getX();
-            double valX = valueX - minX;
+            //double valX = valueX - minX;
             double ratX = valX / diffX;
             double x = graphWidth * ratX;
 
@@ -481,6 +482,7 @@ public class LineGraphSeries<E extends DataPointInterface> extends BaseSeries<E>
             lastEndY = orgY;
             lastEndX = orgX;
             i++;
+            valX += diffX / getmData().size();
         }
 
         if (mDrawAsPath) {

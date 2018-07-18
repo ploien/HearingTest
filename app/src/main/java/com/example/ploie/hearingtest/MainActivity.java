@@ -34,7 +34,6 @@ public class MainActivity extends AppCompatActivity {
 
     static String CURRENT_USER = "bob";
     private User CurrentUser;
-    private FirebaseAuth mAuth;
     private FirebaseUser User;
     private static final int RC_SIGN_IN = 123;
 
@@ -49,7 +48,7 @@ public class MainActivity extends AppCompatActivity {
         text.setMovementMethod(new ScrollingMovementMethod());
         text.setTypeface(null, Typeface.BOLD);
         text.setTextColor(Color.BLACK);
-        text.setText("Disclaimer:\nThis test is not intended to replace professional help and may not be 100% accurate. ");
+        text.setText(R.string.disclaimer);
 
     }
 
@@ -76,7 +75,7 @@ public class MainActivity extends AppCompatActivity {
 
 
     private void instantiateUser() {
-        mAuth = FirebaseAuth.getInstance();
+        FirebaseAuth mAuth = FirebaseAuth.getInstance();
         startActivityForResult(AuthUI.getInstance().createSignInIntentBuilder().build(), RC_SIGN_IN);
     }
 
@@ -123,7 +122,7 @@ public class MainActivity extends AppCompatActivity {
         SharedPreferences.Editor editor = sharedPref.edit();
         String newUser = "Jimmy Bob Joe";
         editor.putString(getString(R.string.current_user), newUser);
-        editor.commit();
+        editor.apply();
 
     }
 

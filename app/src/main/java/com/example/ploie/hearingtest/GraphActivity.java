@@ -9,6 +9,7 @@ import android.view.View;
 import com.example.graphview.DataPoint;
 import com.example.graphview.GraphView;
 import com.example.graphview.GridLabelRenderer;
+import com.example.graphview.LineGraphSeries;
 import com.example.graphview.PointsGraphSeries;
 import com.example.graphview.StaticLabelsFormatter;
 
@@ -85,8 +86,8 @@ public class GraphActivity extends AppCompatActivity {
         DataPoint[] dataPoints = results.sortedPoints();
 
         GraphView graph = findViewById(R.id.graph);
-        //LineGraphSeries<DataPoint> series = new LineGraphSeries<>(dataPoints);
-        //graph.addSeries(series);
+        LineGraphSeries<DataPoint> series = new LineGraphSeries<>(dataPoints);
+        graph.addSeries(series);
 
         String[] horizontalLabels = new String[dataPoints.length];
 
