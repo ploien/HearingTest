@@ -47,6 +47,7 @@ public class TestActivity extends AppCompatActivity {
     final static String TEST_ACTIVITY = "TestActivity";
     public ArrayList<String> testFrequencies = null;
     public ArrayList<String> testDecibels = null;
+    public TextView instructions = null;
 
     //Button yesButton = (Button) findViewById(R.id.yesButton);
     //Button noButton = (Button) findViewById(R.id.noButton);
@@ -62,6 +63,8 @@ public class TestActivity extends AppCompatActivity {
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         setContentView(R.layout.activity_test);
         Intent intent = getIntent();
+        instructions = findViewById(R.id.InstructionsView);
+        instructions.setText(R.string.beforeStart);
 
     }
 
@@ -116,6 +119,7 @@ public class TestActivity extends AppCompatActivity {
     public void onStartClick(View view) {
 
         //startButton.setEnabled(false);
+        instructions.setText(R.string.afterStart);
         final Thread thread = new Thread(new Runnable() {
             public Handler mHandler;
 

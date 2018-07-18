@@ -602,7 +602,7 @@ public class LineGraphSeries<E extends DataPointInterface> extends BaseSeries<E>
      * @param dataPointsRadius the radius for the data points.
      * @see #setDrawDataPoints(boolean)
      */
-    public void setDataPointsRadius(float dataPointsRadius) {
+    private void setDataPointsRadius(float dataPointsRadius) {
         mStyles.dataPointsRadius = dataPointsRadius;
     }
 
@@ -611,7 +611,7 @@ public class LineGraphSeries<E extends DataPointInterface> extends BaseSeries<E>
      *          the line.
      * @see #setDrawBackground(boolean)
      */
-    public int getBackgroundColor() {
+    private int getBackgroundColor() {
         return mStyles.backgroundColor;
     }
 
@@ -620,7 +620,7 @@ public class LineGraphSeries<E extends DataPointInterface> extends BaseSeries<E>
      *                          the line.
      * @see #setDrawBackground(boolean)
      */
-    public void setBackgroundColor(int backgroundColor) {
+    private void setBackgroundColor(int backgroundColor) {
         mStyles.backgroundColor = backgroundColor;
     }
 

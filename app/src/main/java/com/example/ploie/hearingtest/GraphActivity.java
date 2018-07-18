@@ -2,6 +2,7 @@ package com.example.ploie.hearingtest;
 
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
@@ -88,6 +89,7 @@ public class GraphActivity extends AppCompatActivity {
         GraphView graph = findViewById(R.id.graph);
         LineGraphSeries<DataPoint> series = new LineGraphSeries<>(dataPoints);
         graph.addSeries(series);
+        series.setColor(Color.DKGRAY);
 
         String[] horizontalLabels = new String[dataPoints.length];
 

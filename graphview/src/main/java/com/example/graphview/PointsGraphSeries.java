@@ -21,9 +21,6 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Path;
 import android.graphics.Point;
-
-import com.example.graphview.GraphView;
-
 import java.util.ArrayList;
 import java.util.Iterator;
 
@@ -136,7 +133,7 @@ public class PointsGraphSeries<E extends DataPointInterface> extends BaseSeries<
      * inits the internal objects
      * set the defaults
      */
-    protected void init() {
+    private void init() {
         mStyles = new Styles();
         mStyles.size = 20f;
         mPaint = new Paint();
@@ -231,8 +228,6 @@ public class PointsGraphSeries<E extends DataPointInterface> extends BaseSeries<
             double ratX = valX / diffX;
             double x = graphWidth * ratX;
 
-            double orgX = x;
-            double orgY = y;
 
             // overdraw
             boolean overdraw = false;
@@ -249,7 +244,7 @@ public class PointsGraphSeries<E extends DataPointInterface> extends BaseSeries<
             if(x < 0) {
             	//overdraw = true;
             }
-            
+
             float endX = (float) x + (graphLeft + 1);
             float endY = (float) (graphTop - y) + graphHeight;
             registerDataPoint(endX, endY, value);

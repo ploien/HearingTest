@@ -29,4 +29,6 @@
     <string name="disclaimer">This test is not intended to replace professional help and may not be 100% accurate.</string>
     <string name="DisclaimerTitle">Disclaimer</string>
     <string name="button_view_old_tests">View Completed Tests</string>
+    <string name="beforeStart">Please turn phone volume to maximum to ensure and accurate test. \n\nPress start when you are ready to begin.</string>
+    <string name="afterStart">When the tone has finish playing, press \"YES\" if you heard the tone, or \"NO\" if you did not.</string>
 </resources>
