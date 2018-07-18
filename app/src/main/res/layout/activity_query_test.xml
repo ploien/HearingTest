@@ -4,9 +4,11 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".QueryTest">
+    tools:context=".QueryTest"
+    tools:ignore="ExtraText">
 
     <Button
+        android:background="@drawable/button_selector"
         android:id="@+id/TestButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -22,6 +24,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <ListView
+        android:background="@drawable/border"
         android:id="@+id/listView"
         style="@style/Widget.AppCompat.ListView"
         android:layout_width="293dp"
@@ -37,12 +40,13 @@
     <ListView
         android:id="@+id/keysView"
         style="@style/Widget.AppCompat.ListView"
-        android:layout_width="368dp"
-        android:layout_height="129dp"
+        android:layout_width="343dp"
+        android:layout_height="120dp"
         android:layout_marginBottom="356dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginStart="8dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginStart="16dp"
         android:layout_marginTop="84dp"
+        android:background="@drawable/border"
         android:textAlignment="center"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -50,6 +54,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <Button
+        android:background="@drawable/button_selector"
         android:id="@+id/button2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

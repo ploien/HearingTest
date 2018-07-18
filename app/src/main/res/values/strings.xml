@@ -26,9 +26,13 @@
     <string name="text_tests">Tests Performed</string>
     <string name="view_test_info" />
     <string name="view_test_info1">Test Information</string>
-    <string name="disclaimer">This test is not intended to replace professional help and may not be 100% accurate.</string>
+    <string name="disclaimer">This application performs a screening test that is not intended to replace professional help, and may not be 100% accurate. Individual results may vary due to headphone style and environmental factors such as location, background noise and time of day. If the screening participant has concerns regarding their hearing, please seek professional help. \n\n\nThis test is intended to be administered using headphones in a quiet environment in order to ensure as accurate a test as possible.</string>
     <string name="DisclaimerTitle">Disclaimer</string>
+    <string name="UseHeadphones">This test is intended to be administered using headphones in a quiet environment in order to ensure as accurate a test as possible.</string>
     <string name="button_view_old_tests">View Completed Tests</string>
-    <string name="beforeStart">Please turn phone volume to maximum to ensure and accurate test. \n\nPress start when you are ready to begin.</string>
+    <string name="beforeStart">Please turn phone volume to maximum to ensure an accurate test. \n\nPress start when you are ready to begin.</string>
     <string name="afterStart">When the tone has finished playing, press \"YES\" if you heard the tone, or \"NO\" if you did not.</string>
+    <string name="GraphTitle">Hearing Test Results</string>
+    <string name="GraphXAxisTitle">Low          Frequency (kHz)          High</string>
+    <string name="GraphYAxisTitle">Volume (dB)</string>
 </resources>

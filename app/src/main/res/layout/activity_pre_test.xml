@@ -16,7 +16,7 @@
         android:layout_marginTop="8dp"
         android:text="@string/InfoExplain"
         android:textAppearance="@style/TextAppearance.AppCompat"
-        android:textColorLink="#504AC3"
+        android:textColorLink="#000000"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -34,7 +34,7 @@
         android:ems="10"
         android:gravity="center"
         android:inputType="textPersonName"
-        android:shadowColor="#2B22E1"
+        android:shadowColor="#1cf242"
         android:text="@string/empty"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -42,6 +42,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <Button
+        android:background="@drawable/button_selector"
         android:id="@+id/startTest"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

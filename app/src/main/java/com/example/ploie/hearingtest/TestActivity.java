@@ -45,6 +45,7 @@ public class TestActivity extends AppCompatActivity {
     private boolean yesClicked = false;
     private boolean noClicked = false;
 
+    private boolean testing = false;
 
     private TestResults finalResults = null;
     final static String TEST_ACTIVITY = "TestActivity";
@@ -120,18 +121,21 @@ public class TestActivity extends AppCompatActivity {
     public void onStartClick(View view) {
 
 
-        instructions.setText(R.string.afterStart);
+        if(!testing) {
+            testing = true;
+            instructions.setText(R.string.afterStart);
 
-        //Test runds in a background thread
-        final Thread thread = new Thread(new Runnable() {
-            public Handler mHandler;
+            //Test runs in a background thread
+            final Thread thread = new Thread(new Runnable() {
+                public Handler mHandler;
 
-            public void run() {
-                Looper.prepare();
-                test();
-            }
-        });
-        thread.start();
+                public void run() {
+                    Looper.prepare();
+                    test();
+                }
+            });
+            thread.start();
+        }
     }
 
 

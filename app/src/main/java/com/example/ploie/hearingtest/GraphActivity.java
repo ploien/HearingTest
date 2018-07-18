@@ -116,8 +116,8 @@ public class GraphActivity extends AppCompatActivity {
         labels.setNumVerticalLabels(7);
         labels.setPadding(64);
         labels.setTextSize(36);
-        labels.setHorizontalAxisTitle("Frequency (kHz)");
-        labels.setVerticalAxisTitle("Volume (dB)");
+        labels.setHorizontalAxisTitle("Low                             Frequency (kHz)                              High");
+        labels.setVerticalAxisTitle(getString(R.string.GraphYAxisTitle));
 
         //these bounds should not need to be changed.
         graph.getViewport().setMinX(0);
@@ -140,7 +140,7 @@ public class GraphActivity extends AppCompatActivity {
         series3.setShape(PointsGraphSeries.Shape.TRIANGLE);
         graph.addSeries(series3);
 
-        graph.setTitle("Test Results");
+        graph.setTitle(getString(R.string.GraphTitle));
 
 
 

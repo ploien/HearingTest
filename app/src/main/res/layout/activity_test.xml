@@ -8,6 +8,7 @@
     tools:layout_editor_absoluteY="81dp">
 
     <Button
+        android:background="@drawable/button_selector"
         android:id="@+id/noButton"
         android:layout_width="142dp"
         android:layout_height="85dp"
@@ -24,6 +25,7 @@
         app:layout_constraintVertical_bias="0.712" />
 
     <Button
+        android:background="@drawable/button_selector"
         android:id="@+id/button3"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -37,6 +39,7 @@
         app:layout_constraintTop_toBottomOf="@+id/progressBar" />
 
     <Button
+        android:background="@drawable/button_selector"
         android:id="@+id/yesButton"
         android:layout_width="142dp"
         android:layout_height="85dp"
