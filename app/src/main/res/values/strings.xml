@@ -28,4 +28,5 @@
     <string name="view_test_info1">Test Information</string>
     <string name="disclaimer">This test is not intended to replace professional help and may not be 100% accurate.</string>
     <string name="DisclaimerTitle">Disclaimer</string>
+    <string name="button_view_old_tests">View Completed Tests</string>
 </resources>

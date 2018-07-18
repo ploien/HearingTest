@@ -57,6 +57,7 @@
         android:layout_marginEnd="8dp"
         android:layout_marginStart="140dp"
         android:layout_marginTop="300dp"
+        android:onClick="onDeleteClick"
         android:text="@string/button_delete_test"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

@@ -33,7 +33,7 @@ public class MainActivity extends AppCompatActivity {
     public static boolean monitorState = false;
 
     static String CURRENT_USER = "bob";
-    private User CurrentUser;
+    private User CurrentUser = null;
     private FirebaseUser User;
     private static final int RC_SIGN_IN = 123;
 
@@ -85,45 +85,33 @@ public class MainActivity extends AppCompatActivity {
      * @param view
      */
     public void newTest(View view) {
-
-//        final Thread thread = new Thread(new Runnable() {
-//            public Handler mHandler;
-//
-//            public void run() {
-//                Looper.prepare();
-//                setTesterName();;
-//            }
-//        });
-//        thread.start();
-//        waitForThread();
-        CurrentUser = new User(User.getDisplayName(), "No Name Provided");
-
-        Intent intent = new Intent(this, PreTestActivity.class);
-        intent.putExtra("user", CurrentUser);
-        startActivity(intent);
+        if (User == null) {
+            instantiateUser();
+        }
+        else {
+            CurrentUser = new User(User.getDisplayName(), "No Name Provided");
+            Intent intent = new Intent(this, PreTestActivity.class);
+            intent.putExtra("user", CurrentUser);
+            startActivity(intent);
+        }
     }
 
     public void queryTest(View view) {
-        Intent intent = new Intent(this, QueryTest.class);
-        CurrentUser = new User(User.getDisplayName(), "Name");
-        intent.putExtra("user", CurrentUser);
-        startActivity(intent);
-    }
-
-    public void showGraph(View view) {
-        Intent intent = new Intent(this, GraphActivity.class);
-        startActivity(intent);
+        if (User == null) {
+            instantiateUser();
+        }
+        else {
+            Intent intent = new Intent(this, QueryTest.class);
+            CurrentUser = new User(User.getDisplayName(), "Name");
+            intent.putExtra("user", CurrentUser);
+            startActivity(intent);
+        }
     }
 
     @Override
     public void onPause() {
         super.onPause();
         SharedPreferences sharedPref = this.getPreferences(Context.MODE_PRIVATE);
-        SharedPreferences.Editor editor = sharedPref.edit();
-        String newUser = "Jimmy Bob Joe";
-        editor.putString(getString(R.string.current_user), newUser);
-        editor.apply();
-
     }
 
     public void onResume() {

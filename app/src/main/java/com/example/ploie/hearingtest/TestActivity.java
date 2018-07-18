@@ -128,45 +128,18 @@ public class TestActivity extends AppCompatActivity {
     }
 
 
-
+    /**
+     * saveResults takes the results from the tests and stores it in an object that will be stored
+     * in the firebase database. The key by which it stores is the username + a time stamp. This
+     * is necessary to keep test results unique and for data querying.
+     * @param view
+     */
     public void saveResults(View view){
-        testComplete = true;
         Bundle data = getIntent().getExtras();
         User CurrentUser = data.getParcelable("user");
-        if (CurrentUser.getUsername() == "Drew Lundgren"
-                || CurrentUser.getUsername() == "Peter Oien")
-        {
-            testComplete = true;
-        }
+        if (testComplete && finalResults != null) {
 
-        if (testComplete) {
-            if (finalResults == null) {
-                finalResults = new TestResults();
-                ArrayList<String> dummy = new ArrayList<>();
-                dummy.add("30");
-                dummy.add("35");
-                dummy.add("40");
-                dummy.add("45");
-                dummy.add("50");
-                dummy.add("45");
-                dummy.add("40");
-                dummy.add("35");
-                finalResults.setDecibels(dummy);
-                ArrayList<String> dummy2 = new ArrayList<>();
-                dummy2.add("1000");
-                dummy2.add("2000");
-                dummy2.add("4000");
-                dummy2.add("8000");
-                dummy2.add("1000");
-                dummy2.add("500");
-                dummy2.add("250");
-                dummy2.add("125");
-                finalResults.setFrequencies(dummy2);
-                finalResults.setParticpant_name("Demo Screening");
-            }
-            else {
-                finalResults.setParticpant_name(CurrentUser.getname());
-            }
+            finalResults.setParticpant_name(CurrentUser.getname());
 
             FirebaseDatabase database = FirebaseDatabase.getInstance();
             DatabaseReference reference = database.getReference("server/saving-data/fireblog/");
@@ -182,7 +155,7 @@ public class TestActivity extends AppCompatActivity {
             Map<String, TestResults> results = new HashMap();
             results.put("Test", finalResults);
             resultsRef.setValue(results);
-            
+
             displayResults();
         }
     }
