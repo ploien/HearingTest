@@ -177,25 +177,25 @@ public class TestActivity extends AppCompatActivity {
 //     Below is an alpha example of how the test should run. Here are the steps for the code:
 //
 //     1. A boolean value is created to act as a gate, preventing testing on a specific frequency
-//        from ending before testing conditions are met. A mock boolean conditionsMet currently
-//        allows the while loop to always complete.
+//        from ending before testing conditions are met.
 //
-//     2. A for loop, simulating 16 tone tests is created.
+//     2. A for loop, going through each frequency in the test.
 //
 //     3. The boolean, testingFrequency, is flagged as true in the beginning of each iteration of
 //        the for loop. This ensures that each tone is tested.
 //
-//     4. A sleep command is used to simulate the playing of the tone.
+//     4. A sleep command is used to provide padding between tone plays in order to make it clear to
+//        the user when the tone is repeated.
 //
 //     5. The booleans 'waiting' and 'buttonClicked' are set in order to allow the user's input
 //        to the yes / no buttons. The selection of either button allows the test to continue.
-//        the test currently uses an infinite while loop to simulate waiting for user input.
 //
-//     6. If the user clicked yes or no, reactions in the test would take place. For now, it simply
-//        changes the booleans declared at the beginning of TestActivity.
+//     6. If the user clicked yes or no, reactions in the test take place.
 //
-//     7. Since the conditions are always "Met", the testingFrequency boolean is switched to false,
+//     7. Since the conditions are met, the testingFrequency boolean is switched to false,
 //        indicating the completion of the current frequency.
+
+//    8. Mid frequencies are calculated and then tested.
 
     //Starts graph activity that shows the users results after completing the test.
     private void displayResults() {
